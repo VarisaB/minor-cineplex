@@ -1,4 +1,5 @@
-import React from "react";
+"use client";
+import React, { useState } from "react";
 import CinemaCity from "./CinemaCity";
 
 // Define the types for the Cinema and City
@@ -40,6 +41,19 @@ const cities: City[] = [
 ];
 
 const Cinemas: React.FC = () => {
+  // State to store the search query
+  const [searchQuery, setSearchQuery] = useState<string>("");
+
+  // Handle the input change and update the search query
+  const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchQuery(event.target.value);
+  };
+
+  // Filter cities based on the search query
+  const filteredCities = cities.filter((city) =>
+    city.cityName.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
   return (
     <div className="container">
       <div className="xl:flex justify-around">
@@ -49,6 +63,8 @@ const Cinemas: React.FC = () => {
             className="bg-[#21263F] text-white placeholder-gray-400 w-full"
             placeholder="Search City"
             type="text"
+            value={searchQuery}
+            onChange={handleSearch} // Add this to handle the search input
           />
           <img
             src="/cinema/Search_light.svg"
@@ -57,11 +73,17 @@ const Cinemas: React.FC = () => {
           />
         </div>
       </div>
-      {cities.map((city) => (
-        <div className="mt-10 ">
-          <CinemaCity key={city.cityName} city={city} />
-        </div>
-      ))}
+
+      {/* Map over the filtered cities */}
+      {filteredCities.length > 0 ? (
+        filteredCities.map((city) => (
+          <div key={city.cityName} className="mt-10 ">
+            <CinemaCity city={city} />
+          </div>
+        ))
+      ) : (
+        <p className="text-white">No cities found</p>
+      )}
     </div>
   );
 };
