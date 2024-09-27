@@ -26,7 +26,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={robotoCondensed.className}>
         <Navbar />
-        {children}
+        <main className="bg-[#101525]">{children}</main>
         <Footer />
       </body>
     </html>
