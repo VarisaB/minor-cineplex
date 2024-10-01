@@ -8,12 +8,14 @@ export default function SearchMovies() {
         className="w-72 h-12 p-3 bg-[#21263F] placeholder:text-[#8B93B0] border border-[#565F7E] rounded"
         placeholder="Movie"
       />
-      <Image
-        src={"/movies/search-button.png"}
-        alt="search-button"
-        width={72}
-        height={48}
-      />
+      <button>
+        <Image
+          src={"/movies/search-button.png"}
+          alt="search-button"
+          width={72}
+          height={48}
+        />
+      </button>
     </div>
   );
 }
