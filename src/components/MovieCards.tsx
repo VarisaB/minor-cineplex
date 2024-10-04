@@ -30,7 +30,7 @@ export default async function MovieCards() {
   // console.log(moviesList);
 
   return (
-    <div className="movies-container flex flex-wrap gap-5">
+    <div className="movies-container bg-blue-950 flex flex-wrap gap-5 justify-between">
       {moviesList.map((movie) => (
         <div
           key={movie.id}
