@@ -1,40 +1,30 @@
 import Image from "next/image";
-import axios from "axios";
+import { fetchMoviesList } from "@/functions/getMovies";
 
 export default async function MovieCards() {
-  interface movie {
+  interface Movie {
     id: number;
     title: string;
-    release_date: string;
+    release_date: Date;
     poster_path: string;
-    genre_ids: number[];
+    genres: string[];
   }
 
-  async function fetchMoviesList() {
-    try {
-      const res = await axios.get(
-        "https://api.themoviedb.org/3/movie/now_playing",
-        {
-          params: {
-            api_key: process.env.TMDB_KEY,
-          },
-        }
-      );
-      return res.data.results;
-    } catch (error) {
-      console.error(error);
-    }
-  }
-
-  const moviesList: movie[] = await fetchMoviesList();
+  const moviesList: Movie[] = await fetchMoviesList();
   // console.log(moviesList);
 
+  const dateOptions: Intl.DateTimeFormatOptions = {
+    day: "numeric",
+    month: "short",
+    year: "numeric",
+  };
+
   return (
-    <div className="movies-container bg-blue-950 flex flex-wrap gap-5 justify-between">
+    <div className="movies-container grid grid-cols-2 gap-7">
       {moviesList.map((movie) => (
         <div
           key={movie.id}
-          className="movie-card w-40 h-96 flex flex-col gap-4 "
+          className="movie-card w-40 h-96 flex flex-col gap-3"
         >
           <Image
             src={`https://image.tmdb.org/t/p/original${movie.poster_path}`}
@@ -45,12 +35,16 @@ export default async function MovieCards() {
           />
           <div>
             <h3 className="release-date text-[#8B93B0] text-sm font-normal">
-              {movie.release_date}
+              {movie.release_date.toLocaleDateString("en-GB", dateOptions)}
             </h3>
-            <h2 className="movie-name text-xl font-bold">{movie.title}</h2>
+            <h2 className="movie-name text-xl font-bold">
+              {movie.title.length > 20
+                ? `${movie.title.slice(0, 17)}...`
+                : movie.title}
+            </h2>
           </div>
-          <div className="tags flex flex-row flex-wrap gap-2">
-            {movie.genre_ids.map((genre, index) => (
+          <div className="tags flex flex-row flex-wrap gap-1.5">
+            {movie.genres.slice(0, 4).map((genre, index) => (
               <h3
                 key={index}
                 className="tag bg-[#21263F] h-8 px-3 py-1.5 rounded-md text-[#8B93B0] text-sm font-normal "

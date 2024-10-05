@@ -1,0 +1,76 @@
+import axios from "axios";
+import { log } from "console";
+
+interface Movie {
+  id: number;
+  title: string;
+  release_date: Date;
+  poster_path: string;
+  genres: string[];
+}
+
+interface Genre {
+  [key: number]: string;
+}
+
+async function fetchGenre() {
+  try {
+    const res = await axios.get(
+      `https://api.themoviedb.org/3/genre/movie/list`,
+      {
+        params: {
+          api_key: process.env.TMDB_KEY,
+        },
+      }
+    );
+    const rawGenres = res.data.genres;
+    const genresDict: Genre = {};
+
+    rawGenres.forEach((genre: { id: number; name: string }) => {
+      if (genre.name === "Science Fiction") {
+        genresDict[genre.id] = "Sci-Fi";
+      } else {
+        genresDict[genre.id] = genre.name;
+      }
+    });
+
+    // console.log(genresDict);
+
+    return genresDict;
+  } catch (error) {
+    console.error("Error at fetch genres list", error);
+    throw error;
+  }
+}
+
+export async function fetchMoviesList(
+  status: string = "now_playing",
+  search?: string
+): Promise<Movie[]> {
+  try {
+    const res = await axios.get(
+      `https://api.themoviedb.org/3/movie/${status}`,
+      {
+        params: {
+          api_key: process.env.TMDB_KEY,
+        },
+      }
+    );
+    const genresDict: Genre = await fetchGenre();
+
+    const rawMovies = res.data.results;
+    const moviesList: Movie[] = rawMovies.map((movie: any) => ({
+      id: movie.id,
+      title: movie.title,
+      release_date: new Date(movie.release_date),
+      poster_path: movie.poster_path,
+      genres: movie.genre_ids.map((id: number) => genresDict[id]),
+    }));
+    // console.log(moviesList);
+
+    return moviesList;
+  } catch (error) {
+    console.error("Error at fetch movies list", error);
+    throw error;
+  }
+}
