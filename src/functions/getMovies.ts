@@ -1,5 +1,4 @@
 import axios from "axios";
-import { log } from "console";
 
 interface Movie {
   id: number;
@@ -7,6 +6,10 @@ interface Movie {
   release_date: Date;
   poster_path: string;
   genres: string[];
+  overview: string;
+  backdrop_path: string;
+  runtime: number;
+  trailer: string;
 }
 
 interface Genre {
@@ -15,14 +18,11 @@ interface Genre {
 
 async function fetchGenre() {
   try {
-    const res = await axios.get(
-      `https://api.themoviedb.org/3/genre/movie/list`,
-      {
-        params: {
-          api_key: process.env.TMDB_KEY,
-        },
-      }
-    );
+    const res = await axios.get(`${process.env.TMDB_URL}/list`, {
+      params: {
+        api_key: process.env.TMDB_KEY,
+      },
+    });
     const rawGenres = res.data.genres;
     const genresDict: Genre = {};
 
@@ -48,14 +48,11 @@ export async function fetchMoviesList(
   search?: string
 ): Promise<Movie[]> {
   try {
-    const res = await axios.get(
-      `https://api.themoviedb.org/3/movie/${status}`,
-      {
-        params: {
-          api_key: process.env.TMDB_KEY,
-        },
-      }
-    );
+    const res = await axios.get(`${process.env.TMDB_URL}/${status}`, {
+      params: {
+        api_key: process.env.TMDB_KEY,
+      },
+    });
     const genresDict: Genre = await fetchGenre();
 
     const rawMovies = res.data.results;
@@ -71,6 +68,59 @@ export async function fetchMoviesList(
     return moviesList;
   } catch (error) {
     console.error("Error at fetch movies list", error);
+    throw error;
+  }
+}
+
+async function fetchVDO(movieId: string) {
+  try {
+    const res = await axios.get(`${process.env.TMDB_URL}/${movieId}/videos`, {
+      params: {
+        api_key: process.env.TMDB_KEY,
+      },
+    });
+
+    const videos = res.data.results;
+    const trailers = videos.filter(
+      (vdo: any) => vdo.site === "YouTube" && vdo.type === "Trailer"
+    );
+    // console.log(trailers);
+
+    return trailers;
+  } catch (error) {
+    console.error("Error at fetch Video", error);
+    throw error;
+  }
+}
+
+export async function fetchMovieDetail(movieId: string): Promise<Movie> {
+  try {
+    const res = await axios.get(`${process.env.TMDB_URL}/${movieId}`, {
+      params: {
+        api_key: process.env.TMDB_KEY,
+      },
+    });
+    const rawMovie = res.data;
+    const trailers = await fetchVDO(movieId);
+
+    const movie: Movie = {
+      id: rawMovie.id,
+      title: rawMovie.title,
+      release_date: new Date(rawMovie.release_date),
+      poster_path: rawMovie.poster_path,
+      genres: rawMovie.genres.map(
+        (genre: { id: number; name: string }) => genre.name
+      ),
+      overview: rawMovie.overview,
+      backdrop_path: rawMovie.backdrop_path,
+      runtime: rawMovie.runtime,
+      trailer: trailers[0].key,
+    };
+    // console.log(movie);
+
+    return movie;
+  } catch (error) {
+    console.error("Error at fetch movie detail", error);
     throw error;
   }
 }
