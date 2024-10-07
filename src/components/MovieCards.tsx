@@ -20,18 +20,18 @@ export default async function MovieCards() {
   };
 
   return (
-    <div className="movies-container grid grid-cols-2 gap-7">
+    <div className="movies-container grid grid-cols-2 gap-6 md:grid-cols-4">
       {moviesList.map((movie) => (
         <div
           key={movie.id}
-          className="movie-card w-40 h-96 flex flex-col gap-3"
+          className="movie-card w-40 h-96 flex flex-col gap-3 xl:w-64 xl:h-[526px]"
         >
           <Image
             src={`https://image.tmdb.org/t/p/original${movie.poster_path}`}
             alt="poster"
             width={160}
             height={240}
-            className="rounded-md bg-[#21263F]"
+            className="rounded-md bg-[#21263F] xl:w-64 xl:h-96"
           />
           <div>
             <h3 className="release-date text-[#8B93B0] text-sm font-normal">
