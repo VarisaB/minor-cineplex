@@ -1,8 +1,19 @@
 import SearchMovies from "@/components/SearchMovies";
-import MovieCards from "@/components/MovieCards";
+import MovieCard from "@/components/MovieCards";
 import Header from "@/components/Header";
+import { fetchMoviesList } from "@/functions/getMovies";
 
-export default function LandingMoviesPage() {
+export default async function LandingMoviesPage() {
+  interface Movie {
+    id: number;
+    title: string;
+    release_date: Date;
+    poster_path: string;
+    genres: string[];
+  }
+
+  const moviesList: Movie[] = await fetchMoviesList();
+  // console.log(moviesList);
   return (
     <div className="h-full w-full *:box-border flex flex-col items-center">
       <Header />
@@ -16,7 +27,11 @@ export default function LandingMoviesPage() {
             Comming Soon
           </button>
         </div>
-        <MovieCards />
+        <div className="movies-container grid grid-cols-2 gap-6 md:grid-cols-4">
+          {moviesList.map((movie) => (
+            <MovieCard key={movie.id} movie={movie} />
+          ))}
+        </div>
       </div>
     </div>
   );
