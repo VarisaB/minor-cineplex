@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { fetchMoviesList } from "@/functions/getMovies";
+import Tags from "./Tags";
 
 export default async function MovieCards() {
   interface Movie {
@@ -27,7 +28,7 @@ export default async function MovieCards() {
           className="movie-card w-40 h-96 flex flex-col gap-3 xl:w-64 xl:h-[526px]"
         >
           <Image
-            src={`https://image.tmdb.org/t/p/original${movie.poster_path}`}
+            src={`${process.env.TMDB_IMG}${movie.poster_path}`}
             alt="poster"
             width={160}
             height={240}
@@ -43,16 +44,7 @@ export default async function MovieCards() {
                 : movie.title}
             </h2>
           </div>
-          <div className="tags flex flex-row flex-wrap gap-1.5">
-            {movie.genres.slice(0, 4).map((genre, index) => (
-              <h3
-                key={index}
-                className="tag bg-[#21263F] h-8 px-3 py-1.5 rounded-md text-[#8B93B0] text-sm font-normal "
-              >
-                {genre}
-              </h3>
-            ))}
-          </div>
+          <Tags contents={movie.genres.slice(0, 4)} />
         </div>
       ))}
     </div>

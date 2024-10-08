@@ -18,7 +18,7 @@ interface Genre {
 
 async function fetchGenre() {
   try {
-    const res = await axios.get(`${process.env.TMDB_URL}/list`, {
+    const res = await axios.get(`${process.env.TMDB_URL}/genre/movie/list`, {
       params: {
         api_key: process.env.TMDB_KEY,
       },
@@ -48,7 +48,7 @@ export async function fetchMoviesList(
   search?: string
 ): Promise<Movie[]> {
   try {
-    const res = await axios.get(`${process.env.TMDB_URL}/${status}`, {
+    const res = await axios.get(`${process.env.TMDB_URL}/movie/${status}`, {
       params: {
         api_key: process.env.TMDB_KEY,
       },
@@ -63,7 +63,7 @@ export async function fetchMoviesList(
       poster_path: movie.poster_path,
       genres: movie.genre_ids.map((id: number) => genresDict[id]),
     }));
-    // console.log(moviesList);
+    console.log(moviesList);
 
     return moviesList;
   } catch (error) {
@@ -74,11 +74,14 @@ export async function fetchMoviesList(
 
 async function fetchVDO(movieId: string) {
   try {
-    const res = await axios.get(`${process.env.TMDB_URL}/${movieId}/videos`, {
-      params: {
-        api_key: process.env.TMDB_KEY,
-      },
-    });
+    const res = await axios.get(
+      `${process.env.TMDB_URL}/movie/${movieId}/videos`,
+      {
+        params: {
+          api_key: process.env.TMDB_KEY,
+        },
+      }
+    );
 
     const videos = res.data.results;
     const trailers = videos.filter(
@@ -95,7 +98,7 @@ async function fetchVDO(movieId: string) {
 
 export async function fetchMovieDetail(movieId: string): Promise<Movie> {
   try {
-    const res = await axios.get(`${process.env.TMDB_URL}/${movieId}`, {
+    const res = await axios.get(`${process.env.TMDB_URL}/movie/${movieId}`, {
       params: {
         api_key: process.env.TMDB_KEY,
       },
