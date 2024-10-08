@@ -1,6 +1,6 @@
 export default function Tags({ contents }: { contents: string[] }) {
   return (
-    <div className="tags flex flex-row flex-wrap gap-1.5">
+    <div className="tags flex flex-row flex-wrap gap-2">
       {contents.map((content, index) => (
         <p
           key={index}
