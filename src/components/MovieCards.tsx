@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import CardHeader from "./CardHeader";
 
 interface Movie {
@@ -18,13 +19,15 @@ export default async function MovieCard({ movie }: { movie: Movie }) {
 
   return (
     <div className="movie-card w-40 h-96 flex flex-col xl:w-64 xl:h-[526px]">
-      <Image
-        src={`${process.env.TMDB_IMG}${movie.poster_path}`}
-        alt="poster"
-        width={160}
-        height={240}
-        className="rounded-md bg-[#21263F] xl:w-64 xl:h-96"
-      />
+      <Link href={`/${movie.id}`}>
+        <Image
+          src={`${process.env.TMDB_IMG}${movie.poster_path}`}
+          alt="poster"
+          width={160}
+          height={240}
+          className="rounded-md bg-[#21263F] xl:w-64 xl:h-96"
+        />
+      </Link>
       <p className="release-date text-[#8B93B0] text-sm font-normal mt-3">
         {movie.release_date.toLocaleDateString("en-GB", dateOptions)}
       </p>

@@ -63,7 +63,7 @@ export async function fetchMoviesList(
       poster_path: movie.poster_path,
       genres: movie.genre_ids.map((id: number) => genresDict[id]),
     }));
-    console.log(moviesList);
+    // console.log(moviesList);
 
     return moviesList;
   } catch (error) {
