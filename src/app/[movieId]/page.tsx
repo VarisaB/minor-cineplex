@@ -7,7 +7,7 @@ export default async function MovieDetailPage({
 }: {
   params: { movieId: string };
 }) {
-  console.log(params.movieId);
+  // console.log(params.movieId);
 
   const dateOptions: Intl.DateTimeFormatOptions = {
     day: "numeric",

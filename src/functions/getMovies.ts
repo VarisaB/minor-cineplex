@@ -117,7 +117,7 @@ export async function fetchMovieDetail(movieId: string): Promise<Movie> {
       overview: rawMovie.overview,
       backdrop_path: rawMovie.backdrop_path,
       runtime: rawMovie.runtime,
-      trailer: trailers[0].key,
+      trailer: trailers[0]?.key,
     };
     // console.log(movie);
 
