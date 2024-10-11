@@ -24,18 +24,16 @@ export default async function MovieDetailPage({
           alt="poster"
           width={375}
           height={547}
-          className="rounded-md bg-[#21263F] w-full h-auto xl:w-[400px]"
+          className="rounded-md bg-[#21263F] w-full h-auto xl:w-[375px]"
         />
         <div className="detail w-full px-4 py-10 flex flex-col xl:p-20">
           <h1 className="movie-name text-white text-4xl font-bold">
             {movie.title}
           </h1>
-          <div className="tag-date-container mt-4 xl:inline-flex xl:gap-5">
-            <div className="genres flex flex-row flex-wrap gap-5">
-              <Tags contents={movie.genres} />
-              <span className="border-r border-[#565F7E] h-6 my-auto"></span>
-            </div>
-            <p className="release-date text-[#C8CEDD] mt-2 xl:my-auto">
+          <div className="genres-date-container mt-4 flex flex-row flex-wrap items-center gap-x-5 gap-y-2 ">
+            <Tags contents={movie.genres} />
+            <span className="border-r border-[#565F7E] h-6 "></span>
+            <p className="release-date text-[#C8CEDD] w-[90%] xl:w-fit">
               {`Release date: ${movie.release_date.toLocaleDateString(
                 "en-GB",
                 dateOptions
@@ -50,6 +48,11 @@ export default async function MovieDetailPage({
           </p>
         </div>
       </div>
+      <iframe
+        src={`${process.env.YOUTUBE_URL}/${movie.trailer}`}
+        className="w-full aspect-video mx-auto mb-20 md:w-[720px] xl:mt-20"
+        allowFullScreen
+      ></iframe>
     </div>
   );
 }
