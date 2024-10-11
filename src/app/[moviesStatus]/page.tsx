@@ -1,9 +1,14 @@
+import Link from "next/link";
 import SearchMovies from "@/components/SearchMovies";
 import MovieCard from "@/components/MovieCards";
 import Header from "@/components/Header";
 import { fetchMoviesList } from "@/functions/getMovies";
 
-export default async function LandingMoviesPage() {
+export default async function LandingMoviesPage({
+  params,
+}: {
+  params: { moviesStatus: string };
+}) {
   interface Movie {
     id: number;
     title: string;
@@ -11,8 +16,9 @@ export default async function LandingMoviesPage() {
     poster_path: string;
     genres: string[];
   }
+  console.log(params);
 
-  const moviesList: Movie[] = await fetchMoviesList();
+  const moviesList: Movie[] = await fetchMoviesList(params.moviesStatus);
   // console.log(moviesList);
   return (
     <div className="h-full w-full *:box-border flex flex-col items-center">
@@ -20,12 +26,18 @@ export default async function LandingMoviesPage() {
       <SearchMovies />
       <div className="section-container w-fit px-4 py-16 flex flex-col gap-6 md:w-[768px] xl:w-[1150px] xl:mt-7 xl:gap-10">
         <div className="status p-2 flex flex-row gap-6 text-[#8B93B0] text-2xl font-bold ">
-          <button className="h-10 hover:text-white focus:text-white hover:border-b focus:border-b hover:-[#565F7E] focus:border-[#565F7E]">
+          <Link
+            href="/now"
+            className="h-10 hover:text-white focus:text-white hover:border-b focus:border-b hover:-[#565F7E] focus:border-[#565F7E]"
+          >
             Now Showing
-          </button>
-          <button className="h-10 hover:text-white focus:text-white hover:border-b focus:border-b hover:-[#565F7E] focus:border-[#565F7E]">
+          </Link>
+          <Link
+            href="/soon"
+            className="h-10 hover:text-white focus:text-white hover:border-b focus:border-b hover:-[#565F7E] focus:border-[#565F7E]"
+          >
             Comming Soon
-          </button>
+          </Link>
         </div>
         <div className="movies-container grid grid-cols-2 gap-6 md:grid-cols-4">
           {moviesList.map((movie) => (
