@@ -10,7 +10,13 @@ interface Movie {
   genres: string[];
 }
 
-export default async function MovieCard({ movie }: { movie: Movie }) {
+export default async function MovieCard({
+  movie,
+  status,
+}: {
+  movie: Movie;
+  status: string;
+}) {
   const dateOptions: Intl.DateTimeFormatOptions = {
     day: "numeric",
     month: "short",
@@ -19,7 +25,7 @@ export default async function MovieCard({ movie }: { movie: Movie }) {
 
   return (
     <div className="movie-card w-40 h-96 flex flex-col xl:w-64 xl:h-[526px]">
-      <Link href={`/${movie.id}`}>
+      <Link href={`${status}/${movie.id}`}>
         <Image
           src={`${process.env.TMDB_IMG}${movie.poster_path}`}
           alt="poster"

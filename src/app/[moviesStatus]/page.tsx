@@ -1,22 +1,31 @@
 import Link from "next/link";
+import { redirect } from "next/navigation";
 import SearchMovies from "@/components/SearchMovies";
 import MovieCard from "@/components/MovieCards";
 import Header from "@/components/Header";
 import { fetchMoviesList } from "@/functions/getMovies";
+
+interface Movie {
+  id: number;
+  title: string;
+  release_date: Date;
+  poster_path: string;
+  genres: string[];
+}
 
 export default async function LandingMoviesPage({
   params,
 }: {
   params: { moviesStatus: string };
 }) {
-  interface Movie {
-    id: number;
-    title: string;
-    release_date: Date;
-    poster_path: string;
-    genres: string[];
-  }
   console.log(params);
+
+  /**should have other way to check and redirect to 404 not found page**/
+  const validStatus = ["now", "soon"];
+  // If the slug is not in the valid set, redirect to homepage
+  if (!validStatus.includes(params.moviesStatus)) {
+    redirect("/");
+  }
 
   const moviesList: Movie[] = await fetchMoviesList(params.moviesStatus);
   // console.log(moviesList);
@@ -41,7 +50,11 @@ export default async function LandingMoviesPage({
         </div>
         <div className="movies-container grid grid-cols-2 gap-6 md:grid-cols-4">
           {moviesList.map((movie) => (
-            <MovieCard key={movie.id} movie={movie} />
+            <MovieCard
+              key={movie.id}
+              movie={movie}
+              status={params.moviesStatus}
+            />
           ))}
         </div>
       </div>

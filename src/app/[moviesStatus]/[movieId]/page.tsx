@@ -5,7 +5,7 @@ import Tags from "@/components/Tags";
 export default async function MovieDetailPage({
   params,
 }: {
-  params: { movieId: string };
+  params: { moviesStatus: string; movieId: string };
 }) {
   // console.log(params.movieId);
 
@@ -14,6 +14,8 @@ export default async function MovieDetailPage({
     month: "short",
     year: "numeric",
   };
+  console.log(params);
+
   const movie = await fetchMovieDetail(params.movieId);
 
   return (
@@ -40,9 +42,11 @@ export default async function MovieDetailPage({
               )}`}
             </p>
           </div>
-          <button className="booking bg-[#4E7BEE] w-32 h-12 mt-6 py-3 rounded font-bold xl:mt-12">
-            Book Ticket
-          </button>
+          {params.moviesStatus === "now" && (
+            <button className="booking bg-[#4E7BEE] w-32 h-12 mt-6 py-3 rounded font-bold xl:mt-12">
+              Book Ticket
+            </button>
+          )}
           <p className="overview text-[#C8CEDD] mt-10 xl:mt-20">
             {movie.overview}
           </p>
