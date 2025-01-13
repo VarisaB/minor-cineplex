@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { fetchMovieDetail } from "@/functions/getMovies";
 import Tags from "@/components/Tags";
+import { ShowDates } from "@/components/ShowDate";
 
 export default async function MovieDetailPage({
   params,
@@ -52,11 +53,15 @@ export default async function MovieDetailPage({
           </p>
         </div>
       </div>
-      <iframe
+      {/* <iframe
         src={`${process.env.YOUTUBE_URL}/${movie.trailer}`}
         className="w-full aspect-video mx-auto mb-20 md:w-[720px] xl:mt-20"
         allowFullScreen
-      ></iframe>
+      ></iframe> */}
+      <div className="date">
+        <ShowDates />
+      </div>
+      <div className="cinemas"></div>
     </div>
   );
 }
