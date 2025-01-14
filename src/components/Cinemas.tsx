@@ -1,6 +1,7 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import CinemaCity from "./CinemaCity";
+import { fetchCinemas } from "@/functions/getCinemas";
 
 // Define the types for the Cinema and City
 interface Cinema {
@@ -41,6 +42,16 @@ const cities: City[] = [
 ];
 
 const Cinemas: React.FC = () => {
+  // const [cinemas, setCinemas] = useState<Cinema[]>([]);
+
+  useEffect(() => {
+    const fetchdata = async () => {
+      const cinemasList: Cinema[] = await fetchCinemas();
+      console.log(cinemasList);
+    };
+    fetchdata();
+  }, []);
+
   // State to store the search query
   const [searchQuery, setSearchQuery] = useState<string>("");
 
