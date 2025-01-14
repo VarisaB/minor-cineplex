@@ -44,15 +44,19 @@ async function fetchGenre() {
 }
 
 export async function fetchMoviesList(
-  status: string = "now_playing",
+  status: string,
   search?: string
 ): Promise<Movie[]> {
   try {
-    const res = await axios.get(`${process.env.TMDB_URL}/movie/${status}`, {
-      params: {
-        api_key: process.env.TMDB_KEY,
-      },
-    });
+    status = status === "now" ? "now_playing" : "upcoming";
+    const res = await axios.get(
+      `${process.env.TMDB_URL}/movie/${status}?region=TH`,
+      {
+        params: {
+          api_key: process.env.TMDB_KEY,
+        },
+      }
+    );
     const genresDict: Genre = await fetchGenre();
 
     const rawMovies = res.data.results;
