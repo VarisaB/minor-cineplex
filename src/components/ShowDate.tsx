@@ -1,5 +1,3 @@
-import { log } from "console";
-
 export function ShowDates() {
   const date: Date[] = [];
   const today: Date = new Date();

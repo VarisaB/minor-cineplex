@@ -15,10 +15,12 @@ interface Movie {
 
 export default async function LandingMoviesPage({
   params,
+  searchParams,
 }: {
   params: { moviesStatus: string };
+  searchParams: { name: string };
 }) {
-  console.log(params);
+  console.log(params, searchParams);
 
   /**should have other way to check and redirect to 404 not found page**/
   const validStatus = ["now", "soon"];
@@ -27,8 +29,15 @@ export default async function LandingMoviesPage({
     redirect("/");
   }
 
-  const moviesList: Movie[] = await fetchMoviesList(params.moviesStatus);
+  let moviesList: Movie[] = await fetchMoviesList(params.moviesStatus);
   // console.log(moviesList);
+
+  if (searchParams?.name) {
+    moviesList = moviesList.filter((movie) =>
+      movie.title.toLowerCase().includes(searchParams.name.toLowerCase())
+    );
+  }
+
   return (
     <div className="h-full w-full *:box-border flex flex-col items-center">
       <Header />
