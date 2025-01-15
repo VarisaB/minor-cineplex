@@ -1,4 +1,5 @@
 "use client";
+import Link from "next/link";
 import { useState, useEffect } from "react";
 
 export default function Navbar() {
@@ -28,7 +29,9 @@ export default function Navbar() {
       }`}
     >
       {/* Use img tag for static assets from the public directory */}
-      <img src="/header/logo.svg" alt="Logo" className="h-8" />
+      <Link href={"/"}>
+        <img src="/header/logo.svg" alt="Logo" className="h-8" />
+      </Link>
       <img src="/header/hamburger.svg" alt="Hambugermenu" className="h-8" />
     </div>
   );

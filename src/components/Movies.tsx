@@ -5,13 +5,13 @@ export default function Movies() {
     <div>
       Movies
       <Link
-        href="/now"
+        href="/movies/now"
         className="h-10 hover:text-white focus:text-white hover:border-b focus:border-b hover:-[#565F7E] focus:border-[#565F7E]"
       >
         Now Showing
       </Link>
       <Link
-        href="/soon"
+        href="/movies/soon"
         className="h-10 hover:text-white focus:text-white hover:border-b focus:border-b hover:-[#565F7E] focus:border-[#565F7E]"
       >
         Comming Soon

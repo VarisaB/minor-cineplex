@@ -3,10 +3,13 @@
 import axios from "axios";
 import { Cinema } from "@/models/cinemas";
 
-export const fetchCinemas = async () => {
+export const fetchCinemas = async (cinemaId?: string) => {
   try {
     const res = await axios.get(
-      `${process.env.NEXT_PUBLIC_BASE_URL}/api/cinemas`
+      `${process.env.NEXT_PUBLIC_BASE_URL}/api/cinemas`,
+      {
+        params: { cinemaId: cinemaId },
+      }
     );
     // console.log(res.data);
     return res.data;

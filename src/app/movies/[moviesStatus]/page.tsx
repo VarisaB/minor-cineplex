@@ -45,13 +45,13 @@ export default async function LandingMoviesPage({
       <div className="section-container w-fit px-4 py-16 flex flex-col gap-6 md:w-[768px] xl:w-[1150px] xl:mt-7 xl:gap-10">
         <div className="status p-2 flex flex-row gap-6 text-[#8B93B0] text-2xl font-bold ">
           <Link
-            href="/now"
+            href="/movies/now"
             className="h-10 hover:text-white focus:text-white hover:border-b focus:border-b hover:-[#565F7E] focus:border-[#565F7E]"
           >
             Now Showing
           </Link>
           <Link
-            href="/soon"
+            href="/movies/soon"
             className="h-10 hover:text-white focus:text-white hover:border-b focus:border-b hover:-[#565F7E] focus:border-[#565F7E]"
           >
             Comming Soon
