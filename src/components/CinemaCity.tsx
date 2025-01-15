@@ -1,10 +1,5 @@
 import React from "react";
-
-// Define the types for the Cinema and City
-interface Cinema {
-  cinemaName: string;
-  location: string; // Ensure this matches the property name in your data
-}
+import { Cinema } from "@/models/cinemas";
 
 interface City {
   cityName: string;
@@ -29,7 +24,7 @@ const CinemaCity: React.FC<CinemaCityProps> = ({ city }) => {
           >
             <img src="/cinema/Pin_fill.svg" alt="Logo" className="h-8" />
             <div>
-              <h1 className="font-bold">{cinema.cinemaName}</h1>
+              <h1 className="font-bold">{cinema.name}</h1>
               <p className="text-[#8B93B0]">{cinema.location}</p>
             </div>
           </div>

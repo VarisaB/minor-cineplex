@@ -2,53 +2,44 @@
 import React, { useState, useEffect } from "react";
 import CinemaCity from "./CinemaCity";
 import { fetchCinemas } from "@/functions/getCinemas";
-
-// Define the types for the Cinema and City
-interface Cinema {
-  cinemaName: string;
-  location: string;
-}
+import { Cinema } from "@/models/cinemas";
 
 interface City {
   cityName: string;
   cinemas: Cinema[];
 }
 
-// Use correct types for the cities array
-const cities: City[] = [
-  {
-    cityName: "Bangkok",
-    cinemas: [
-      { cinemaName: "Minor Cineplex Bangna", location: "Bangna" },
-      { cinemaName: "Minor Cineplex Siam", location: "Siam" },
-      { cinemaName: "Minor Cineplex Rama9", location: "Rama9" },
-    ],
-  },
-  {
-    cityName: "Pathumthani",
-    cinemas: [
-      { cinemaName: "D", location: "ddd" },
-      { cinemaName: "F", location: "fff" },
-      { cinemaName: "E", location: "eee" },
-    ],
-  },
-  {
-    cityName: "Nonthaburi",
-    cinemas: [
-      { cinemaName: "H", location: "hhh" },
-      { cinemaName: "I", location: "iii" },
-    ],
-  },
-];
-
 const Cinemas: React.FC = () => {
-  // const [cinemas, setCinemas] = useState<Cinema[]>([]);
+  const [cities, setCiities] = useState<City[]>([
+    {
+      cityName: "Bangkok",
+      cinemas: [],
+    },
+    {
+      cityName: "Nonthaburi",
+      cinemas: [],
+    },
+    {
+      cityName: "Pathumthani",
+      cinemas: [],
+    },
+  ]);
 
   useEffect(() => {
     const fetchdata = async () => {
       const cinemasList: Cinema[] = await fetchCinemas();
       console.log(cinemasList);
+
+      const updatedCities = cities.map((city) => {
+        const filteredCinemas: Cinema[] = cinemasList.filter(
+          (cinema) => cinema.city === city.cityName
+        );
+        return { ...city, cinemas: filteredCinemas };
+      });
+
+      setCiities(updatedCities);
     };
+
     fetchdata();
   }, []);
 
@@ -71,7 +62,7 @@ const Cinemas: React.FC = () => {
         <h1 className="text-2xl font-bold mb-4">All Cinemas</h1>
         <div className="flex bg-[#21263F] border-[#565F7E] w-52 p-1 pl-2 rounded-lg items-center mb-6">
           <input
-            className="bg-[#21263F] text-white placeholder-gray-400 w-full"
+            className="bg-[#21263F] text-white placeholder-gray-400 w-full focus:outline-none"
             placeholder="Search City"
             type="text"
             value={searchQuery}

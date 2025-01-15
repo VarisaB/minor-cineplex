@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 export interface Cinema {
   name: string;
   location: string;
+  city: string;
 }
 
 const cinemaSchema = new mongoose.Schema({
