@@ -3,7 +3,7 @@ import { redirect } from "next/navigation";
 import SearchMovies from "@/components/SearchMovies";
 import MovieCard from "@/components/MovieCards";
 import Header from "@/components/Header";
-import { fetchMoviesList } from "@/functions/getMovies";
+import { fetchMoviesList } from "@/lib/movie-api";
 
 interface Movie {
   id: number;

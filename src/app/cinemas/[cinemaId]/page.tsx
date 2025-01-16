@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Tags from "@/components/Tags";
-import cinemas, { Cinema } from "@/models/cinemas";
-import { fetchCinemas } from "@/functions/getCinemas";
+import cinemas, { Cinema } from "@/models/cinema";
+import { fetchCinemas } from "@/lib/cinema-api";
 import { ShowDates } from "@/components/ShowDate";
 
 export default async function CinemaDetailPage({

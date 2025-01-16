@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { fetchMovieDetail } from "@/functions/getMovies";
+import { fetchMovieDetail } from "@/lib/movie-api";
 import Tags from "@/components/Tags";
 import { ShowDates } from "@/components/ShowDate";
 

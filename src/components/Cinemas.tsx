@@ -1,8 +1,8 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import CinemaCity from "./CinemaCity";
-import { fetchCinemas } from "@/functions/getCinemas";
-import { Cinema } from "@/models/cinemas";
+import { fetchCinemas } from "@/lib/cinema-api";
+import { Cinema } from "@/models/cinema";
 
 interface City {
   cityName: string;

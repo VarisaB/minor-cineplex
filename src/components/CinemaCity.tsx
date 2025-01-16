@@ -1,5 +1,5 @@
 import React from "react";
-import { Cinema } from "@/models/cinemas";
+import { Cinema } from "@/models/cinema";
 import Link from "next/link";
 
 interface City {

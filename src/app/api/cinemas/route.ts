@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import cinemas, { Cinema } from "@/models/cinemas";
+import cinemas, { Cinema } from "@/models/cinema";
 import mongoose from "mongoose";
 
 export async function GET(req: NextRequest) {
