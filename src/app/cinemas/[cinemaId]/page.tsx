@@ -9,7 +9,7 @@ export default async function CinemaDetailPage({
 }: {
   params: { cinemaId: string };
 }) {
-  console.log(params.cinemaId);
+  console.log("cinema param: ", params.cinemaId);
 
   const cinema: Cinema = await fetchCinemas(params.cinemaId);
 
@@ -17,43 +17,27 @@ export default async function CinemaDetailPage({
 
   return (
     <div className="w-full h-full flex flex-col">
-      {/* <div className="flex flex-col mx-auto xl:flex-row xl:mt-32 xl:w-[1200px] xl:bg-[#070C1BB2] xl:backdrop-blur-xl ">
+      <div className="flex flex-row mx-auto p-4 mt-16 xl:mt-32 w-full max-w-[1200px] bg-[#070C1BB2] xl:backdrop-blur-xl ">
         <Image
-          src="\cinema\poster.png"
+          src="/cinema/poster.png"
           alt="poster"
-          width={120}
-          height={180}
-          className="rounded-md bg-[#21263F] w-full h-auto xl:w-[375px]"
+          width={400}
+          height={600}
+          className="rounded-md w-32 h-48 xl:w-72 xl:h-[400px] object-cover object-center  bg-[#21263F]"
         />
-        <div className="detail w-full px-4 py-10 flex flex-col xl:p-20">
-          <h1 className="movie-name text-white text-4xl font-bold">
+        <div className="m-4 xl:m-14 flex flex-col gap-4 ">
+          <h1 className="text-white text-2xl xl:text-4xl font-bold">
             {cinema.name}
           </h1>
-          <div className="genres-date-container mt-4 flex flex-row flex-wrap items-center gap-x-5 gap-y-2 ">
-            <Tags contents={movie.genres} />
-            <span className="border-r border-[#565F7E] h-6 "></span>
-            <p className="release-date text-[#C8CEDD] w-[90%] xl:w-fit">
-              {`Release date: ${movie.release_date.toLocaleDateString(
-                "en-GB",
-                dateOptions
-              )}`}
-            </p>
-          </div>
-          {params.moviesStatus === "now" && (
-            <button className="booking bg-[#4E7BEE] w-32 h-12 mt-6 py-3 rounded font-bold xl:mt-12">
-              Book Ticket
-            </button>
-          )}
-          <p className="overview text-[#C8CEDD] mt-10 xl:mt-20">
-            {movie.overview}
+          <p className="location">{cinema.location}</p>
+          <p className="overview hidden md:block text-[#C8CEDD] xl:mt-12">
+            Minor Cineplex cinemas often offer features like comfortable
+            seating, concession stands with snacks and drinks, and advanced
+            sound systems. Typically show a mix of Hollywood blockbusters, Thai
+            films, and independent or international movies.
           </p>
         </div>
-      </div> */}
-      {/* <iframe
-        src={`${process.env.YOUTUBE_URL}/${movie.trailer}`}
-        className="w-full aspect-video mx-auto mb-20 md:w-[720px] xl:mt-20"
-        allowFullScreen
-      ></iframe> */}
+      </div>
       <div className="date">
         <ShowDates />
       </div>

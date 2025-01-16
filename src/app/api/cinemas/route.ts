@@ -4,7 +4,7 @@ import mongoose from "mongoose";
 
 export async function GET(req: NextRequest) {
   // console.log(req.nextUrl.searchParams);
-  let cinemaId = req.nextUrl.searchParams.get("cinema");
+  let cinemaId = req.nextUrl.searchParams.get("cinemaId");
   // console.log("cinema_id = ", cinemaId);
 
   /* TODO: check type of ID before fetch data */
