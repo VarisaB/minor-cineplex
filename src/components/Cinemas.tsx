@@ -28,7 +28,7 @@ const Cinemas: React.FC = () => {
   useEffect(() => {
     const fetchdata = async () => {
       const cinemasList: Cinema[] = await fetchCinemas();
-      console.log(cinemasList);
+      // console.log(cinemasList);
 
       const updatedCities = cities.map((city) => {
         const filteredCinemas: Cinema[] = cinemasList.filter(

@@ -1,5 +1,6 @@
 import React from "react";
 import { Cinema } from "@/models/cinemas";
+import Link from "next/link";
 
 interface City {
   cityName: string;
@@ -18,16 +19,15 @@ const CinemaCity: React.FC<CinemaCityProps> = ({ city }) => {
       {/* Grid Container */}
       <div className="grid grid-cols-1 xl:grid-cols-2 gap-4">
         {city.cinemas.map((cinema, index) => (
-          <div
-            key={index}
-            className="flex items-center gap-2 mb-2 border-[0.1px] border-white/[.20] p-4 rounded-lg"
-          >
-            <img src="/cinema/Pin_fill.svg" alt="Logo" className="h-8" />
-            <div>
-              <h1 className="font-bold">{cinema.name}</h1>
-              <p className="text-[#8B93B0]">{cinema.location}</p>
+          <Link href={`/cinemas/${cinema._id}`} key={index}>
+            <div className="flex items-center gap-2 mb-2 border-[0.1px] border-white/[.20] p-4 rounded-lg">
+              <img src="/cinema/Pin_fill.svg" alt="Logo" className="h-8" />
+              <div>
+                <h1 className="font-bold">{cinema.name}</h1>
+                <p className="text-[#8B93B0]">{cinema.location}</p>
+              </div>
             </div>
-          </div>
+          </Link>
         ))}
       </div>
     </>

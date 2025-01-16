@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 
 export interface Cinema {
+  _id: mongoose.Types.ObjectId;
   name: string;
   location: string;
   city: string;

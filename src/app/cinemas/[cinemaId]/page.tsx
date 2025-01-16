@@ -9,11 +9,11 @@ export default async function CinemaDetailPage({
 }: {
   params: { cinemaId: string };
 }) {
-  console.log("cinema param: ", params.cinemaId);
+  // console.log("cinema param: ", params.cinemaId);
 
   const cinema: Cinema = await fetchCinemas(params.cinemaId);
 
-  console.log(cinema);
+  // console.log(cinema);
 
   return (
     <div className="w-full h-full flex flex-col">
@@ -29,7 +29,9 @@ export default async function CinemaDetailPage({
           <h1 className="text-white text-2xl xl:text-4xl font-bold">
             {cinema.name}
           </h1>
-          <p className="location">{cinema.location}</p>
+          <p className="location">
+            {cinema.location}, {cinema.city}
+          </p>
           <p className="overview hidden md:block text-[#C8CEDD] xl:mt-12">
             Minor Cineplex cinemas often offer features like comfortable
             seating, concession stands with snacks and drinks, and advanced

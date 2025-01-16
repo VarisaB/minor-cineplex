@@ -46,13 +46,17 @@ export default async function LandingMoviesPage({
         <div className="status p-2 flex flex-row gap-6 text-[#8B93B0] text-2xl font-bold ">
           <Link
             href="/movies/now"
-            className="h-10 hover:text-white focus:text-white hover:border-b focus:border-b hover:-[#565F7E] focus:border-[#565F7E]"
+            className={`h-10 
+            ${params.moviesStatus === "now" ? "text-white border-b" : ""}
+              hover:text-white focus:text-white hover:border-b focus:border-b hover:-[#565F7E] focus:border-[#565F7E]`}
           >
             Now Showing
           </Link>
           <Link
             href="/movies/soon"
-            className="h-10 hover:text-white focus:text-white hover:border-b focus:border-b hover:-[#565F7E] focus:border-[#565F7E]"
+            className={`h-10 
+            ${params.moviesStatus === "soon" ? "text-white border-b" : ""}
+             hover:text-white focus:text-white hover:border-b focus:border-b hover:-[#565F7E] focus:border-[#565F7E]`}
           >
             Comming Soon
           </Link>
