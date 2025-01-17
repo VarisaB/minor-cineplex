@@ -1,6 +1,9 @@
 "use client";
+import { createUserProfile } from "@/lib/profile-api";
+import { error } from "console";
 import Link from "next/link";
-import React from "react";
+import { useRouter } from "next/navigation";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 
 type formValue = {
@@ -13,9 +16,24 @@ function Register() {
   const form = useForm<formValue>();
   const { register, control, handleSubmit, formState } = form;
   const { errors } = formState;
+  const [emailError, setEmailError] = useState<string | null>(null);
+  const router = useRouter();
 
-  const onSubmit = (data: formValue) => {
+  const onSubmit = async (data: formValue) => {
     console.log("form submitted", data);
+    try {
+      await createUserProfile(data);
+      router.replace("/login");
+    } catch (err: any) {
+      // console.error("register: ", err);
+
+      if (err.response?.data?.error.includes("exist")) {
+        setEmailError("Email is already use. Please try another");
+      } else {
+        setEmailError(null);
+        console.error("Unexpected error:", err);
+      }
+    }
   };
 
   return (
@@ -63,6 +81,9 @@ function Register() {
               })}
             />
             <p className="text-red-500 text-xs mt-1">{errors.email?.message}</p>
+            {emailError && (
+              <p className="text-red-500 text-xs mt-1">{emailError}</p>
+            )}
           </div>
 
           <div className="mb-2">
