@@ -1,5 +1,6 @@
 import Cinemas from "@/components/Cinemas";
 import FilterFunction from "@/components/FilterFunction";
+import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import Movies from "@/components/Movies";
 import Image from "next/image";
@@ -11,6 +12,7 @@ export default function Home() {
       <FilterFunction />
       <Movies />
       <Cinemas />
+      <Footer />
     </main>
   );
 }

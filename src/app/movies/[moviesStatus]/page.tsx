@@ -4,6 +4,7 @@ import SearchMovies from "@/components/SearchMovies";
 import MovieCard from "@/components/MovieCards";
 import Header from "@/components/Header";
 import { fetchMoviesList } from "@/lib/movie-api";
+import Footer from "@/components/Footer";
 
 interface Movie {
   id: number;
@@ -71,6 +72,7 @@ export default async function LandingMoviesPage({
           ))}
         </div>
       </div>
+      <Footer />
     </div>
   );
 }

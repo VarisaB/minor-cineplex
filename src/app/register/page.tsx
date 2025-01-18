@@ -22,8 +22,8 @@ function Register() {
     } catch (err: any) {
       // console.error("register: ", err);
 
-      if (err.response?.data?.error.includes("exist")) {
-        setEmailError("Email is already use. Please try another");
+      if (err.response?.data?.message.includes("exist")) {
+        setEmailError("Email is already use. Please try another.");
       } else {
         setEmailError(null);
         console.error("Unexpected error:", err);

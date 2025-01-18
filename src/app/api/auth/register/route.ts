@@ -6,10 +6,13 @@ export async function POST(req: NextRequest) {
   const { name, email, password } = await req.json();
 
   /* Check Existing User*/
-  const isExist = await user.findOne({ email });
-  // console.log(isExist);
-  if (isExist) {
-    return NextResponse.json({ error: "User already exists" }, { status: 400 });
+  const existUser: UserProfile | null = await user.findOne({ email });
+  // console.log(existUser);
+  if (existUser) {
+    return NextResponse.json(
+      { message: "User already exists" },
+      { status: 400 }
+    );
   }
 
   /*hash password*/
@@ -31,6 +34,9 @@ export async function POST(req: NextRequest) {
       { status: 201 }
     );
   } catch (error) {
-    return NextResponse.json({ error: "Registration failed" }, { status: 500 });
+    return NextResponse.json(
+      { message: "Registration failed" },
+      { status: 500 }
+    );
   }
 }

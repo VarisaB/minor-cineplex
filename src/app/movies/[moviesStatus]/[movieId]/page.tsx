@@ -2,6 +2,7 @@ import Image from "next/image";
 import { fetchMovieDetail } from "@/lib/movie-api";
 import Tags from "@/components/Tags";
 import { ShowDates } from "@/components/ShowDate";
+import Footer from "@/components/Footer";
 
 export default async function MovieDetailPage({
   params,
@@ -62,6 +63,7 @@ export default async function MovieDetailPage({
         <ShowDates />
       </div>
       <div className="cinemas"></div>
+      <Footer />
     </div>
   );
 }

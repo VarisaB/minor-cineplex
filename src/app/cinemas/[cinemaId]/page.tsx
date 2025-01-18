@@ -3,6 +3,7 @@ import Tags from "@/components/Tags";
 import cinemas, { Cinema } from "@/models/cinema";
 import { fetchCinemas } from "@/lib/cinema-api";
 import { ShowDates } from "@/components/ShowDate";
+import Footer from "@/components/Footer";
 
 export default async function CinemaDetailPage({
   params,
@@ -44,6 +45,7 @@ export default async function CinemaDetailPage({
         <ShowDates />
       </div>
       <div className="cinemas"></div>
+      <Footer />
     </div>
   );
 }
