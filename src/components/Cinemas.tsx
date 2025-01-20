@@ -57,7 +57,7 @@ const Cinemas: React.FC = () => {
   );
 
   return (
-    <div className="container">
+    <div className="container py-10">
       <div className="xl:flex justify-around">
         <h1 className="text-2xl font-bold mb-4">All Cinemas</h1>
         <div className="flex bg-[#21263F] border-[#565F7E] w-52 p-1 pl-2 rounded-lg items-center mb-6">

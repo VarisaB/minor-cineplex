@@ -25,7 +25,7 @@ export default async function MovieCard({
 
   return (
     <div className="movie-card w-40 h-96 flex flex-col xl:w-64 xl:h-[526px]">
-      <Link href={`${status}/${movie.id}`}>
+      <Link href={`movies/${status}/${movie.id}`}>
         <Image
           src={`${process.env.TMDB_IMG}${movie.poster_path}`}
           alt="poster"

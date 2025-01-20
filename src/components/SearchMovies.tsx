@@ -1,24 +1,26 @@
 "use client";
 import Image from "next/image";
 import { useSearchParams, usePathname, useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function SearchMovies() {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const router = useRouter();
   const [searchText, setSearchText] = useState<string>("");
+  const params = new URLSearchParams(searchParams);
+
+  useEffect(() => {
+    setSearchText("");
+  }, [params.get("status")]);
 
   const handleSubmit = () => {
-    const params = new URLSearchParams(searchParams);
     if (searchText) {
       params.set("name", searchText);
-      // console.log(params);
-      router.replace(`${pathname}?${params?.toString()}`);
+      router.push(`${pathname}?${params?.toString()}`);
     } else {
       params.delete("name");
-      // console.log(params);
-      router.replace(`${pathname}`);
+      router.push(`${pathname}`);
     }
   };
 
@@ -32,7 +34,7 @@ export default function SearchMovies() {
     >
       <input
         className="w-72 h-12 p-3 bg-[#21263F] placeholder:text-[#8B93B0] border border-[#565F7E] rounded"
-        placeholder="Movie"
+        placeholder="Movie Name"
         value={searchText}
         onChange={(event) => {
           setSearchText(event.target.value);

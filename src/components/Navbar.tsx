@@ -35,9 +35,23 @@ export default function Navbar() {
       <div
         className={`fixed top-0 h-16 w-full z-50 flex justify-between items-center p-4 xl:px-20 border-b-2 border-[#21263F] backdrop-blur-lg `}
       >
-        <Link href={"/"}>
-          <img src="/header/logo.svg" alt="Logo" className="h-8" />
-        </Link>
+        <div className="flex gap-10 items-end text-[#C8CEDD] ">
+          <Image
+            src="/header/logo.svg"
+            alt="Logo"
+            width={30}
+            height={60}
+            className="mr-5"
+          />
+
+          <Link href={"/"} className="p-1">
+            MOVIE
+          </Link>
+
+          <Link href={"/cinemas"} className="p-1">
+            CINEMA
+          </Link>
+        </div>
 
         <button
           onClick={() => {
