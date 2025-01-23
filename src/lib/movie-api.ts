@@ -18,11 +18,14 @@ interface Genre {
 
 async function fetchGenre() {
   try {
-    const res = await axios.get(`${process.env.TMDB_URL}/genre/movie/list`, {
-      params: {
-        api_key: process.env.TMDB_KEY,
-      },
-    });
+    const res = await axios.get(
+      `${process.env.NEXT_PUBLIC_TMDB_URL}/genre/movie/list`,
+      {
+        params: {
+          api_key: process.env.NEXT_PUBLIC_TMDB_KEY,
+        },
+      }
+    );
     const rawGenres = res.data.genres;
     const genresDict: Genre = {};
 
@@ -50,10 +53,10 @@ export async function fetchMoviesList(
   try {
     status = status === "now" ? "now_playing" : "upcoming";
     const res = await axios.get(
-      `${process.env.TMDB_URL}/movie/${status}?region=TH`,
+      `${process.env.NEXT_PUBLIC_TMDB_URL}/movie/${status}?region=TH`,
       {
         params: {
-          api_key: process.env.TMDB_KEY,
+          api_key: process.env.NEXT_PUBLIC_TMDB_KEY,
         },
       }
     );
@@ -79,10 +82,10 @@ export async function fetchMoviesList(
 async function fetchVDO(movieId: string) {
   try {
     const res = await axios.get(
-      `${process.env.TMDB_URL}/movie/${movieId}/videos`,
+      `${process.env.NEXT_PUBLIC_TMDB_URL}/movie/${movieId}/videos`,
       {
         params: {
-          api_key: process.env.TMDB_KEY,
+          api_key: process.env.NEXT_PUBLIC_TMDB_KEY,
         },
       }
     );
@@ -102,11 +105,14 @@ async function fetchVDO(movieId: string) {
 
 export async function fetchMovieDetail(movieId: string): Promise<Movie> {
   try {
-    const res = await axios.get(`${process.env.TMDB_URL}/movie/${movieId}`, {
-      params: {
-        api_key: process.env.TMDB_KEY,
-      },
-    });
+    const res = await axios.get(
+      `${process.env.NEXT_PUBLIC_TMDB_URL}/movie/${movieId}`,
+      {
+        params: {
+          api_key: process.env.NEXT_PUBLIC_TMDB_KEY,
+        },
+      }
+    );
     const rawMovie = res.data;
     const trailers = await fetchVDO(movieId);
 

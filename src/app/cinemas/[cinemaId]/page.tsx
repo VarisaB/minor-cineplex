@@ -4,6 +4,7 @@ import cinemas, { Cinema } from "@/models/cinema";
 import { fetchCinemas } from "@/lib/cinema-api";
 import { ShowDates } from "@/components/ShowDate";
 import Footer from "@/components/Footer";
+import MovieShowtime from "@/components/MovieShowtime";
 
 export default async function CinemaDetailPage({
   params,
@@ -17,14 +18,14 @@ export default async function CinemaDetailPage({
   // console.log(cinema);
 
   return (
-    <div className="w-full h-full flex flex-col">
-      <div className="flex flex-row mx-auto p-4 mt-16 xl:mt-32 w-full max-w-[1200px] bg-[#070C1BB2] xl:backdrop-blur-xl ">
+    <div className="w-full h-full flex flex-col gap-10">
+      <div className="flex flex-row md:items-center xl:items-start mx-auto p-4 mt-16 xl:mt-32 w-full max-w-[1200px] bg-[#070C1BB2] xl:backdrop-blur-xl ">
         <Image
           src="/cinema/poster.png"
           alt="poster"
           width={400}
           height={600}
-          className="rounded-md w-32 h-48 xl:w-72 xl:h-[400px] object-cover object-center  bg-[#21263F]"
+          className="rounded-md w-32 h-44 xl:w-72 xl:h-[400px] object-cover object-center  bg-[#21263F]"
         />
         <div className="m-4 xl:m-14 flex flex-col gap-4 ">
           <h1 className="text-white text-2xl xl:text-4xl font-bold">
@@ -41,10 +42,12 @@ export default async function CinemaDetailPage({
           </p>
         </div>
       </div>
-      <div className="date">
+      <div className="date bg-[#070C1B] overflow-x-auto flex xl:justify-center ">
         <ShowDates />
       </div>
-      <div className="cinemas"></div>
+      <div className="cinemas">
+        <MovieShowtime />
+      </div>
       <Footer />
     </div>
   );

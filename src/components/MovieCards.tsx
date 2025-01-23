@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import CardHeader from "./CardHeader";
+import Tags from "./Tags";
 
 interface Movie {
   id: number;
@@ -27,7 +27,7 @@ export default async function MovieCard({
     <div className="movie-card w-40 h-96 flex flex-col xl:w-64 xl:h-[526px]">
       <Link href={`movies/${status}/${movie.id}`}>
         <Image
-          src={`${process.env.TMDB_IMG}${movie.poster_path}`}
+          src={`${process.env.NEXT_PUBLIC_TMDB_IMG}${movie.poster_path}`}
           alt="poster"
           width={160}
           height={240}
@@ -37,7 +37,15 @@ export default async function MovieCard({
       <p className="release-date text-[#8B93B0] text-sm font-normal mt-3">
         {movie.release_date.toLocaleDateString("en-GB", dateOptions)}
       </p>
-      <CardHeader name={movie.title} tags={movie.genres.slice(0, 3)} />
+      <div className="flex flex-col gap-3">
+        <h4 className="movie-name text-xl font-bold">
+          {/* find other way for breaking word*/}
+          {movie.title.length > 20
+            ? `${movie.title.slice(0, 17)}...`
+            : movie.title}
+        </h4>
+        <Tags contents={movie.genres.slice(0, 3)} />
+      </div>
     </div>
   );
 }

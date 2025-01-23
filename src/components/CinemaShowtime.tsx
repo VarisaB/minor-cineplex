@@ -19,11 +19,8 @@ export default function CinemaShowtime() {
   return (
     <div className="flex flex-col gap-6 items-center ">
       {cinemas.map((cinema) => (
-        <div className="xl:w-[1200px]">
-          <div
-            key={cinema._id.toString()}
-            className="bg-[#070C1B] border-b border-[#21263F] p-4 xl:px-6 flex flex-row justify-between items-center"
-          >
+        <div key={cinema._id.toString()} className="xl:w-[1200px]">
+          <div className="bg-[#070C1B] border-b border-[#21263F] p-4 xl:px-6 flex flex-row justify-between items-center">
             <div className="flex flex-row items-center gap-5">
               <Image
                 src="/cinema/Pin_fill.svg"

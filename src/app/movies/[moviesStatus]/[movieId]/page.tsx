@@ -25,7 +25,7 @@ export default async function MovieDetailPage({
     <div className="w-full h-full flex flex-col gap-10">
       <div className="flex flex-col mx-auto xl:flex-row xl:mt-32 xl:w-[1200px] xl:bg-[#070C1BB2] xl:backdrop-blur-xl ">
         <Image
-          src={`${process.env.TMDB_IMG}${movie.poster_path}`}
+          src={`${process.env.NEXT_PUBLIC_TMDB_IMG}${movie.poster_path}`}
           alt="poster"
           width={375}
           height={547}
@@ -45,11 +45,11 @@ export default async function MovieDetailPage({
               )}`}
             </p>
           </div>
-          {params.moviesStatus === "now" && (
+          {/* {params.moviesStatus === "now" && (
             <button className="booking bg-[#4E7BEE] w-32 h-12 mt-6 py-3 rounded font-bold xl:mt-12">
               Book Ticket
             </button>
-          )}
+          )} */}
           <p className="overview text-[#C8CEDD] mt-10 xl:mt-20">
             {movie.overview}
           </p>
@@ -60,12 +60,18 @@ export default async function MovieDetailPage({
         className="w-full aspect-video mx-auto mb-20 md:w-[720px] xl:mt-20"
         allowFullScreen
       ></iframe> */}
-      <div className="date bg-[#070C1B] overflow-x-auto flex xl:justify-center ">
-        <ShowDates />
-      </div>
-      <div className="cinemas-hall xl:mx-28">
-        <CinemaShowtime />
-      </div>
+
+      {params.moviesStatus === "now" && (
+        <div className="date bg-[#070C1B] overflow-x-auto flex xl:justify-center ">
+          <ShowDates />
+        </div>
+      )}
+      {params.moviesStatus === "now" && (
+        <div className="cinemas-hall xl:mx-28">
+          <CinemaShowtime />
+        </div>
+      )}
+
       <Footer />
     </div>
   );
