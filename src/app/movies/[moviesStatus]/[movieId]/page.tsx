@@ -3,6 +3,7 @@ import { fetchMovieDetail } from "@/lib/movie-api";
 import Tags from "@/components/Tags";
 import { ShowDates } from "@/components/ShowDate";
 import Footer from "@/components/Footer";
+import CinemaShowtime from "@/components/CinemaShowtime";
 
 export default async function MovieDetailPage({
   params,
@@ -21,7 +22,7 @@ export default async function MovieDetailPage({
   const movie = await fetchMovieDetail(params.movieId);
 
   return (
-    <div className="w-full h-full flex flex-col">
+    <div className="w-full h-full flex flex-col gap-10">
       <div className="flex flex-col mx-auto xl:flex-row xl:mt-32 xl:w-[1200px] xl:bg-[#070C1BB2] xl:backdrop-blur-xl ">
         <Image
           src={`${process.env.TMDB_IMG}${movie.poster_path}`}
@@ -59,10 +60,12 @@ export default async function MovieDetailPage({
         className="w-full aspect-video mx-auto mb-20 md:w-[720px] xl:mt-20"
         allowFullScreen
       ></iframe> */}
-      <div className="date">
+      <div className="date bg-[#070C1B] overflow-x-auto flex xl:justify-center ">
         <ShowDates />
       </div>
-      <div className="cinemas"></div>
+      <div className="cinemas-hall xl:mx-28">
+        <CinemaShowtime />
+      </div>
       <Footer />
     </div>
   );

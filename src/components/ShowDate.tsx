@@ -20,17 +20,25 @@ export function ShowDates() {
   //   console.log(date, today);
 
   return (
-    <div className="my-12 h-24 bg-[#070C1B] flex flex-row gap-2 items-center justify-center">
+    <div className="p-4 h-24 w-fit bg-[#070C1B] flex flex-row gap-2">
       {date.map((d, index) => (
-        <div
-          key={index}
-          className="border rounded-md h-16 w-40 flex flex-col items-center justify-center"
+        <button
+          key={d.valueOf()}
+          className={`rounded w-28 xl:w-40 h-16 flex flex-col items-center justify-center ${
+            index === 0 ? "bg-[#21263F]" : ""
+          } `}
         >
-          <div>
+          <h3
+            className={`text-2xl font-bold ${
+              index === 0 ? "text-white" : "text-[#8B93B0]"
+            }`}
+          >
             {index === 0 ? "TODAY" : d.toLocaleDateString("en-GB", dayOptions)}
-          </div>
-          <div>{d.toLocaleDateString("en-GB", dateOptions)}</div>
-        </div>
+          </h3>
+          <p className={`${index === 0 ? "text-[#C8CEDD]" : "text-[#565F7E]"}`}>
+            {d.toLocaleDateString("en-GB", dateOptions)}
+          </p>
+        </button>
       ))}
     </div>
   );

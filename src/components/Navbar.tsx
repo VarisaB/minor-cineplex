@@ -70,15 +70,15 @@ export default function Navbar() {
             onClick={() => {
               setIsOpen(!isOpen);
             }}
-            className="hidden xl:flex xl:flex-row xl:items-center xl:gap-2 "
+            className="hidden xl:flex xl:flex-row xl:items-center xl:gap-4 "
           >
             {/* <div className="bg-white rounded-full w-10 h-10"></div> */}
             {session?.user?.name}
             <Image
-              src="/header/Vector.png"
+              src="/header/vector.svg"
               alt="dropdown icon"
               width={12}
-              height={24}
+              height={6}
             />
           </button>
         ) : (
