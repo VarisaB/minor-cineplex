@@ -1,10 +1,21 @@
 import mongoose from "mongoose";
 
 export interface Cinema {
-  _id: mongoose.Types.ObjectId;
+  id: string;
   name: string;
   location: string;
   city: string;
+  totalHalls: number;
+}
+
+export function mappingCinemaStructure(cinema: any) {
+  return {
+    id: cinema._id.toString(),
+    name: cinema.name,
+    location: cinema.location,
+    city: cinema.city,
+    totalHalls: cinema.hall_count,
+  };
 }
 
 const cinemaSchema = new mongoose.Schema({
@@ -18,7 +29,11 @@ const cinemaSchema = new mongoose.Schema({
   },
   city: {
     type: String,
-    require: true,
+    required: true,
+  },
+  hall_count: {
+    type: Number,
+    required: true,
   },
 });
 

@@ -20,7 +20,7 @@ const CinemaCity: React.FC<CinemaCityProps> = ({ city }) => {
       {/* Grid Container */}
       <div className="grid grid-cols-1 xl:grid-cols-2 gap-4">
         {city.cinemas.map((cinema, index) => (
-          <Link href={`/cinemas/${cinema._id}`} key={index}>
+          <Link href={`/cinemas/${cinema.id}`} key={index}>
             <div className="flex items-center gap-2 mb-2 border-[0.1px] border-white/[.20] p-4 rounded-lg">
               <Image
                 src="/cinema/Pin_fill.svg"

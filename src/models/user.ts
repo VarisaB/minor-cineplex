@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 export interface UserProfile {
-  _id?: mongoose.Types.ObjectId;
+  id?: string;
   name: string;
   email: string;
   password: string;
@@ -19,6 +19,14 @@ const userSchema = new mongoose.Schema({
   password: {
     type: String,
     require: true,
+  },
+  create_at: {
+    type: Date,
+    default: Date.now(),
+  },
+  update_at: {
+    type: Date,
+    default: Date.now(),
   },
 });
 

@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import cinemas, { Cinema } from "@/models/cinema";
-import mongoose from "mongoose";
+import cinemas, { Cinema, mappingCinemaStructure } from "@/models/cinema";
 
 export async function GET(req: NextRequest) {
   // console.log(req.nextUrl.searchParams);
@@ -10,10 +9,16 @@ export async function GET(req: NextRequest) {
   /* TODO: check type of ID before fetch data */
   // cinemaId = mongoose.Types.ObjectId.isValid(cinemaId)? cinemaId: null
 
-  const data: Cinema | Cinema[] | null = cinemaId
-    ? await cinemas.findById(cinemaId)
-    : await cinemas.find();
-  // console.log(data);
+  let data: Cinema | Cinema[] | null;
+  if (cinemaId) {
+    const res = await cinemas.findById(cinemaId);
+    data = mappingCinemaStructure(res);
+  } else {
+    const res = await cinemas.find();
+    data = res.map((cinema) => mappingCinemaStructure(cinema));
+  }
+
+  console.log("route cinema", data);
 
   return NextResponse.json(data);
 }
