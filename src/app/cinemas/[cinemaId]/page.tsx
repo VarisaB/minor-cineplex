@@ -1,5 +1,4 @@
 import Image from "next/image";
-import Tags from "@/components/Tags";
 import cinemas, { Cinema } from "@/models/cinema";
 import { fetchCinemas } from "@/lib/cinema-api";
 import { ShowDates } from "@/components/ShowDate";
@@ -46,7 +45,7 @@ export default async function CinemaDetailPage({
         <ShowDates />
       </div>
       <div className="cinemas">
-        <MovieShowtime />
+        <MovieShowtime cinemaId={params.cinemaId} />
       </div>
       <Footer />
     </div>

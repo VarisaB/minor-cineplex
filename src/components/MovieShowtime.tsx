@@ -6,14 +6,19 @@ import Image from "next/image";
 import Halls from "./Halls";
 import Tags from "./Tags";
 import Link from "next/link";
+import { fetchShowtimes } from "@/lib/showtimes-api";
 
-export default function MovieShowtime() {
+export default function MovieShowtime({ cinemaId }: { cinemaId: string }) {
   const [movies, setMovies] = useState<Movie[]>([]);
+  const [showtimes, setShowtimes] = useState<any[]>([]);
 
   useEffect(() => {
     const fetchdata = async () => {
       const moviesList: Movie[] = await fetchMoviesList("now");
       setMovies(moviesList);
+
+      const showtimesList = await fetchShowtimes({ cinemaId });
+      setShowtimes(showtimesList);
     };
     fetchdata();
   }, []);
@@ -23,7 +28,7 @@ export default function MovieShowtime() {
       {movies.map((movie) => (
         <div
           key={movie.id}
-          className="xl:w-[1200px] xl:flex xl:flex-row bg-[#070C1B]"
+          className="w-full xl:w-[1200px] xl:flex xl:flex-row bg-[#070C1B]"
         >
           <div className=" border-[#21263F] p-4 xl:p-6 flex flex-row xl:flex-col gap-6">
             <Image
@@ -46,7 +51,13 @@ export default function MovieShowtime() {
               </Link>
             </div>
           </div>
-          <Halls />
+          {showtimes && (
+            <Halls
+              showtimes={showtimes.filter(
+                (showtime) => showtime.movieId === movie.id
+              )}
+            />
+          )}
         </div>
       ))}
     </div>

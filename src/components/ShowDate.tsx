@@ -27,6 +27,7 @@ export function ShowDates() {
           className={`rounded w-28 xl:w-40 h-16 flex flex-col items-center justify-center ${
             index === 0 ? "bg-[#21263F]" : ""
           } `}
+          /**TODO: add param to path with selectedDate then onclick change selectedDate*/
         >
           <h3
             className={`text-2xl font-bold ${
