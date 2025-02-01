@@ -68,7 +68,7 @@ export default async function MovieDetailPage({
       )}
       {params.moviesStatus === "now" && (
         <div className="cinemas-hall xl:mx-28">
-          <CinemaShowtime />
+          <CinemaShowtime movieId={params.movieId} />
         </div>
       )}
 

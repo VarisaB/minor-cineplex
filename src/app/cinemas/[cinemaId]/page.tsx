@@ -18,7 +18,7 @@ export default async function CinemaDetailPage({
 
   return (
     <div className="w-full h-full flex flex-col gap-10">
-      <div className="flex flex-row md:items-center xl:items-start mx-auto p-4 mt-16 xl:mt-32 w-full max-w-[1200px] bg-[#070C1BB2] xl:backdrop-blur-xl ">
+      <div className="flex flex-row md:items-center xl:items-start xl:mx-auto p-4 mt-16 xl:mt-32 w-full xl:w-[1200px] bg-[#070C1BB2] xl:backdrop-blur-xl ">
         <Image
           src="/cinema/poster.png"
           alt="poster"

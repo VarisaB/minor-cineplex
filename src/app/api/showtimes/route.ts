@@ -31,7 +31,7 @@ export async function GET(req: NextRequest) {
     queryDB.movie_id = movieId;
   }
   if (cinemaId) {
-    queryDB.cinema_id = new mongoose.Types.ObjectId(cinemaId);
+    queryDB.cinema_id = cinemaId;
   }
 
   const data = await showtimes.find(queryDB);
