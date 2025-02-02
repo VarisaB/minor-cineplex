@@ -5,7 +5,7 @@ import axios from "axios";
 import { Movie } from "@/models/movie";
 import mongoose from "mongoose";
 
-function setToday(date: Date) {
+function setToday(date: string | number | Date) {
   const today = new Date(date);
   today.setHours(0, 0, 0, 0);
   const tomorrow = new Date(today);
@@ -14,15 +14,20 @@ function setToday(date: Date) {
 }
 
 export async function GET(req: NextRequest) {
-  console.log("showtime model: ", showtimes);
-  const { today, tomorrow } = setToday(new Date());
-  console.log("date = ", today, tomorrow);
-
   const cinemaId = req.nextUrl.searchParams.get("cinemaId");
-  console.log("cinema_id = ", cinemaId);
-
   const movieId = req.nextUrl.searchParams.get("movieId");
-  console.log("movie_id = ", movieId);
+  const selcetedDate = req.nextUrl.searchParams.get("selectedDate");
+  console.log(
+    "cinema_id = ",
+    cinemaId,
+    "movie_id = ",
+    movieId,
+    "selected date = ",
+    selcetedDate
+  );
+
+  const { today, tomorrow } = setToday(Number(selcetedDate));
+  console.log("date = ", today, tomorrow);
 
   const queryDB: any = {
     showtime: { $gte: today, $lt: tomorrow },
@@ -35,7 +40,7 @@ export async function GET(req: NextRequest) {
   }
 
   const data = await showtimes.find(queryDB);
-  // console.log(data);
+  console.log(data);
 
   return NextResponse.json(data);
 }

@@ -7,8 +7,10 @@ import MovieShowtime from "@/components/MovieShowtime";
 
 export default async function CinemaDetailPage({
   params,
+  searchParams,
 }: {
   params: { cinemaId: string };
+  searchParams?: { selected: string };
 }) {
   // console.log("cinema param: ", params.cinemaId);
 

@@ -8,21 +8,25 @@ import Tags from "./Tags";
 import Link from "next/link";
 import { fetchShowtimes } from "@/lib/showtimes-api";
 import { Showtime } from "@/models/showtime";
+import { useSearchParams } from "next/navigation";
 
 export default function MovieShowtime({ cinemaId }: { cinemaId: string }) {
   const [movies, setMovies] = useState<Movie[]>([]);
   const [showtimes, setShowtimes] = useState<Showtime[]>([]);
+  const searchParams = useSearchParams();
 
   useEffect(() => {
     const fetchdata = async () => {
       const moviesList: Movie[] = await fetchMoviesList("now");
       setMovies(moviesList);
-
-      const showtimesList = await fetchShowtimes({ cinemaId });
+      const showtimesList = await fetchShowtimes({
+        cinemaId,
+        date: searchParams.get("selected"),
+      });
       setShowtimes(showtimesList);
     };
     fetchdata();
-  }, []);
+  }, [searchParams]);
 
   return (
     <div className="flex flex-col gap-6 items-center">
