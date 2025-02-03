@@ -6,10 +6,10 @@ interface Movie {
   release_date: Date;
   poster_path: string;
   genres: string[];
-  overview: string;
-  backdrop_path: string;
-  runtime: number;
-  trailer: string;
+  overview?: string;
+  backdrop_path?: string;
+  runtime?: number;
+  trailer?: string;
 }
 
 interface Genre {
@@ -46,30 +46,34 @@ async function fetchGenre() {
   }
 }
 
-export async function fetchMoviesList(
-  status: string,
-  search?: string
-): Promise<Movie[]> {
+export async function fetchMoviesList(status: string): Promise<Movie[]> {
   try {
     status = status === "now" ? "now_playing" : "upcoming";
     const res = await axios.get(
-      `${process.env.NEXT_PUBLIC_TMDB_URL}/movie/${status}?region=TH`,
+      `${process.env.NEXT_PUBLIC_TMDB_URL}/movie/${status}?region=TH&page=1`,
       {
         params: {
           api_key: process.env.NEXT_PUBLIC_TMDB_KEY,
         },
       }
     );
+
     const genresDict: Genre = await fetchGenre();
 
-    const rawMovies = res.data.results;
-    const moviesList: Movie[] = rawMovies.map((movie: any) => ({
+    const rawData = [...res.data.results];
+    const moviesList: Movie[] = rawData.map((movie: any) => ({
       id: movie.id,
       title: movie.title,
       release_date: new Date(movie.release_date),
       poster_path: movie.poster_path,
       genres: movie.genre_ids.map((id: number) => genresDict[id]),
     }));
+
+    moviesList.sort((a, b) =>
+      status === "now_playing"
+        ? b.release_date.valueOf() - a.release_date.valueOf()
+        : a.release_date.valueOf() - b.release_date.valueOf()
+    );
     // console.log(moviesList);
 
     return moviesList;

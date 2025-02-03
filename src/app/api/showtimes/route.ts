@@ -17,17 +17,17 @@ export async function GET(req: NextRequest) {
   const cinemaId = req.nextUrl.searchParams.get("cinemaId");
   const movieId = req.nextUrl.searchParams.get("movieId");
   const selcetedDate = req.nextUrl.searchParams.get("selectedDate");
-  console.log(
-    "cinema_id = ",
-    cinemaId,
-    "movie_id = ",
-    movieId,
-    "selected date = ",
-    selcetedDate
-  );
+  // console.log(
+  //   "cinema_id = ",
+  //   cinemaId,
+  //   "movie_id = ",
+  //   movieId,
+  //   "selected date = ",
+  //   selcetedDate
+  // );
 
   const { today, tomorrow } = setToday(Number(selcetedDate));
-  console.log("date = ", today, tomorrow);
+  // console.log("date = ", today, tomorrow);
 
   const queryDB: any = {
     showtime: { $gte: today, $lt: tomorrow },
@@ -40,7 +40,7 @@ export async function GET(req: NextRequest) {
   }
 
   const data = await showtimes.find(queryDB);
-  console.log(data);
+  // console.log(data);
 
   return NextResponse.json(data);
 }

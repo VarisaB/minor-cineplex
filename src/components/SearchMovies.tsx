@@ -1,27 +1,42 @@
 "use client";
 import Image from "next/image";
-import { useSearchParams, usePathname, useRouter } from "next/navigation";
+import {
+  useParams,
+  useSearchParams,
+  usePathname,
+  useRouter,
+} from "next/navigation";
 import { useEffect, useState } from "react";
 
 export default function SearchMovies() {
+  const { moviesStatus } = useParams();
+  const status = moviesStatus ?? "now";
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const router = useRouter();
-  const [searchText, setSearchText] = useState<string>("");
   const params = new URLSearchParams(searchParams);
+  const [searchText, setSearchText] = useState<string>("");
 
   useEffect(() => {
-    setSearchText("");
-  }, [params.get("status")]);
+    const nameParam = searchParams.get("name");
+    if (nameParam) {
+      setSearchText(nameParam);
+    } else {
+      setSearchText("");
+    }
+  }, [searchParams, pathname, router]);
 
   const handleSubmit = () => {
     if (searchText) {
       params.set("name", searchText);
-      router.push(`${pathname}?${params?.toString()}`);
     } else {
       params.delete("name");
-      router.push(`${pathname}`);
     }
+    router.replace(
+      `${
+        process.env.NEXT_PUBLIC_BASE_URL
+      }/movies/${status}?${params?.toString()}`
+    );
   };
 
   return (

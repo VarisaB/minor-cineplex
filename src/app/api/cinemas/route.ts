@@ -18,7 +18,7 @@ export async function GET(req: NextRequest) {
     data = res.map((cinema) => mappingCinemaStructure(cinema));
   }
 
-  console.log("route cinema", data);
+  // console.log("route cinema", data);
 
   return NextResponse.json(data);
 }

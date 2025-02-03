@@ -12,14 +12,16 @@ interface Movie {
 }
 
 export default async function Movies({
+  params,
   searchParams,
 }: {
-  searchParams: { status?: string; name?: string };
+  params?: { moviesStatus: string };
+  searchParams?: { name: string };
 }) {
-  // console.log(searchParams);
+  console.log(params, searchParams);
 
   let moviesList: Movie[] = await fetchMoviesList(
-    searchParams?.status || "now"
+    params?.moviesStatus || "now"
   );
   // console.log(moviesList);
 
@@ -34,20 +36,20 @@ export default async function Movies({
     <div className="section-container w-fit px-4 py-16 flex flex-col gap-6 md:w-[768px] xl:w-[1150px] xl:mt-7 xl:gap-10">
       <div className="status p-2 flex flex-row gap-6 text-[#8B93B0] text-2xl font-bold ">
         <Link
-          href={`/`}
+          href={`${process.env.NEXT_PUBLIC_BASE_URL}/movies/now`}
           className={`h-10 
-            ${searchParams?.status !== "soon" ? "text-white border-b" : ""}
+            ${params?.moviesStatus !== "soon" ? "text-white border-b" : ""}
               hover:text-white focus:text-white hover:border-b focus:border-b hover:-[#565F7E] focus:border-[#565F7E]`}
         >
           Now Showing
         </Link>
         <Link
           href={{
-            pathname: "/",
-            query: { status: "soon" },
+            pathname: `${process.env.NEXT_PUBLIC_BASE_URL}/movies/soon`,
+            // query: { status: "soon" },
           }}
           className={`h-10 
-            ${searchParams?.status === "soon" ? "text-white border-b" : ""}
+            ${params?.moviesStatus === "soon" ? "text-white border-b" : ""}
              hover:text-white focus:text-white hover:border-b focus:border-b hover:-[#565F7E] focus:border-[#565F7E]`}
         >
           Comming Soon
@@ -58,7 +60,7 @@ export default async function Movies({
           <MovieCard
             key={movie.id}
             movie={movie}
-            status={searchParams.status || "now"}
+            status={params?.moviesStatus || "now"}
           />
         ))}
       </div>
