@@ -47,7 +47,7 @@ export default function Halls({ showtimes }: { showtimes: Showtime[] }) {
                   disabled={show.showtime < now}
                   onClick={() => {
                     router.push(
-                      `${process.env.NEXT_PUBLIC_BASE_URL}/showtimes/${show.id}`
+                      `${process.env.NEXT_PUBLIC_BASE_URL}/booking/${show.id}`
                     );
                   }}
                 >
