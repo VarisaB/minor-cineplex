@@ -37,4 +37,5 @@ const cinemaSchema = new mongoose.Schema({
   },
 });
 
-export default mongoose.models.Cinema || mongoose.model("Cinema", cinemaSchema);
+export default mongoose.models?.Cinemas ||
+  mongoose.model("Cinemas", cinemaSchema);

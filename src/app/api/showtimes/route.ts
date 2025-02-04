@@ -1,9 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import showtimes, { Showtime } from "@/models/showtime";
-import cinemas, { Cinema, mappingCinemaStructure } from "@/models/cinema";
+import cinemas, { Cinema } from "@/models/cinema";
 import axios from "axios";
 import { Movie } from "@/models/movie";
-import mongoose from "mongoose";
 
 function setToday(date: string | number | Date) {
   const today = new Date(date);
@@ -11,6 +10,16 @@ function setToday(date: string | number | Date) {
   const tomorrow = new Date(today);
   tomorrow.setDate(today.getDate() + 1);
   return { today, tomorrow };
+}
+
+export function mappingCinemaStructure(cinema: any) {
+  return {
+    id: cinema._id.toString(),
+    name: cinema.name,
+    location: cinema.location,
+    city: cinema.city,
+    totalHalls: cinema.hall_count,
+  };
 }
 
 export async function GET(req: NextRequest) {

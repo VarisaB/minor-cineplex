@@ -1,7 +1,4 @@
-//use this function in client-side
-
 import axios from "axios";
-import { Cinema } from "@/models/cinema";
 
 export const fetchCinemas = async (cinemaId?: string) => {
   try {

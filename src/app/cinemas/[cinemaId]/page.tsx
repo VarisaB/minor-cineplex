@@ -1,9 +1,12 @@
 import Image from "next/image";
-import cinemas, { Cinema } from "@/models/cinema";
+import { Cinema } from "@/models/cinema";
 import { fetchCinemas } from "@/lib/cinema-api";
 import { ShowDates } from "@/components/ShowDate";
 import Footer from "@/components/Footer";
 import MovieShowtime from "@/components/MovieShowtime";
+import { Movie } from "@/models/movie";
+import { fetchMoviesList } from "@/lib/movie-api";
+import { fetchShowtimes } from "@/lib/showtimes-api";
 
 export default async function CinemaDetailPage({
   params,
@@ -15,8 +18,11 @@ export default async function CinemaDetailPage({
   // console.log("cinema param: ", params.cinemaId);
 
   const cinema: Cinema = await fetchCinemas(params.cinemaId);
-
-  // console.log(cinema);
+  const moviesList: Movie[] = await fetchMoviesList("now");
+  const showtimesList = await fetchShowtimes({
+    cinemaId: params.cinemaId,
+    date: searchParams?.selected,
+  });
 
   return (
     <div className="w-full h-full flex flex-col gap-10">
@@ -46,8 +52,16 @@ export default async function CinemaDetailPage({
       <div className="date bg-[#070C1B] overflow-x-auto flex xl:justify-center ">
         <ShowDates />
       </div>
-      <div className="cinemas">
-        <MovieShowtime cinemaId={params.cinemaId} />
+      <div className="movie-hall flex flex-col gap-6 items-center ">
+        {moviesList.map((movie: Movie) => (
+          <MovieShowtime
+            key={movie.id}
+            movie={movie}
+            showtimes={showtimesList.filter(
+              (show) => show.movieId === movie.id
+            )}
+          />
+        ))}
       </div>
       <Footer />
     </div>

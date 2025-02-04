@@ -1,7 +1,10 @@
+"use client";
 import { Showtime } from "@/models/showtime";
+import { useRouter } from "next/navigation";
 
 export default function Halls({ showtimes }: { showtimes: Showtime[] }) {
   // console.log("hall: ", showtimes);
+  const router = useRouter();
 
   const halls: number[] = showtimes.reduce((acc: number[], curr) => {
     if (!acc.includes(curr.hall)) {
@@ -42,6 +45,11 @@ export default function Halls({ showtimes }: { showtimes: Showtime[] }) {
                     self
                   )}`}
                   disabled={show.showtime < now}
+                  onClick={() => {
+                    router.push(
+                      `${process.env.NEXT_PUBLIC_BASE_URL}/showtimes/${show.id}`
+                    );
+                  }}
                 >
                   {show.showtime.toLocaleTimeString("en-GB", timeOptions)}
                 </button>

@@ -12,7 +12,7 @@ export async function fetchShowtimes({
 }: {
   cinemaId?: string;
   movieId?: string;
-  date: string | null;
+  date: string | undefined;
 }) {
   try {
     const res = await axios.get(
