@@ -1,16 +1,5 @@
 import axios from "axios";
-
-interface Movie {
-  id: number;
-  title: string;
-  release_date: Date;
-  poster_path: string;
-  genres: string[];
-  overview?: string;
-  backdrop_path?: string;
-  runtime?: number;
-  trailer?: string;
-}
+import { Movie } from "@/models/movie";
 
 interface Genre {
   [key: number]: string;
@@ -83,7 +72,7 @@ export async function fetchMoviesList(status: string): Promise<Movie[]> {
   }
 }
 
-async function fetchVDO(movieId: string) {
+async function fetchVDO(movieId: string | number) {
   try {
     const res = await axios.get(
       `${process.env.NEXT_PUBLIC_TMDB_URL}/movie/${movieId}/videos`,
@@ -107,8 +96,13 @@ async function fetchVDO(movieId: string) {
   }
 }
 
-export async function fetchMovieDetail(movieId: string): Promise<Movie> {
+export async function fetchMovieDetail(
+  movieId: string | number | undefined
+): Promise<Movie | null> {
   try {
+    if (!movieId) {
+      return null;
+    }
     const res = await axios.get(
       `${process.env.NEXT_PUBLIC_TMDB_URL}/movie/${movieId}`,
       {

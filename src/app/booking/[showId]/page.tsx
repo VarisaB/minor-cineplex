@@ -15,7 +15,7 @@ export default function SelectingSeat() {
       <div className="p-4">
         <SeatingPlan />
       </div>
-      <div className="detail bg-[#070C1B] p-4">
+      <div className="detail bg-[#070C1B]">
         <BookingDetail />
       </div>
     </div>
