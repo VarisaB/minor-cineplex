@@ -2,10 +2,12 @@
 import BookingDetail from "@/components/BookingDetail";
 import BookingStep from "@/components/BookingStep";
 import SeatingPlan from "@/components/SeatingPlan";
+import { ShowDetail } from "@/components/ShowDetail";
 import { useState } from "react";
 
 export default function SelectingSeat() {
   const [currentStep, setCurrentStep] = useState<number>(2);
+  const [selectedSeat, setSelectedSeat] = useState<string[]>([]);
 
   return (
     <div className="mt-16">
@@ -13,10 +15,24 @@ export default function SelectingSeat() {
         <BookingStep currentStep={currentStep} />
       </div>
       <div className="p-4">
-        <SeatingPlan />
+        {currentStep === 2 && (
+          <SeatingPlan
+            selectedSeat={selectedSeat}
+            setSelectedSeat={setSelectedSeat}
+          />
+        )}
       </div>
-      <div className="detail bg-[#070C1B] p-4">
-        <BookingDetail />
+      <div className="bg-[#070C1B]">
+        <ShowDetail />
+        {selectedSeat.length ? (
+          <BookingDetail
+            selectedSeat={selectedSeat}
+            step={currentStep}
+            setStep={setCurrentStep}
+          />
+        ) : (
+          <></>
+        )}
       </div>
     </div>
   );

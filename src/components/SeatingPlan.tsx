@@ -1,8 +1,25 @@
 import Image from "next/image";
+import { Dispatch, SetStateAction, useEffect } from "react";
 
-export default function SeatingPlan() {
+type Props = {
+  selectedSeat: string[];
+  setSelectedSeat: Dispatch<SetStateAction<string[]>>;
+};
+
+export default function SeatingPlan({ selectedSeat, setSelectedSeat }: Props) {
   const rowLabel = ["A", "B", "C", "D", "E", "F"];
   const seatNo = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+
+  const handleSelecting = (seat: string) => {
+    console.log(seat);
+    if (selectedSeat.includes(seat)) {
+      setSelectedSeat((prev) => prev.filter((item) => item !== seat));
+    } else {
+      setSelectedSeat((prev) => [...prev, seat]);
+    }
+  };
+
+  useEffect(() => {}, [selectedSeat]);
 
   return (
     <div className="flex flex-col gap-7 xl:gap-16">
@@ -11,13 +28,38 @@ export default function SeatingPlan() {
         <div key={label} className="flex flex-row justify-between items-center">
           <p>{label}</p>
           {seatNo.map((seat) => (
-            <Image
-              src="/booking/Seat-available.svg"
-              alt="available-seat-icon"
-              width={40}
-              height={40}
-              className=""
-            />
+            <button
+              key={label + seat}
+              className="relative"
+              onClick={() => handleSelecting(label + seat)}
+            >
+              <Image
+                src="/booking/Seat-available.svg"
+                alt="available-seat-icon"
+                width={40}
+                height={40}
+                className=""
+              />
+              {selectedSeat.includes(label + seat) && (
+                <div className="absolute top-0 w-full h-full flex justify-center items-center">
+                  <svg
+                    width="29"
+                    height="28"
+                    viewBox="0 0 29 28"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="bg-white rounded-full"
+                  >
+                    <path
+                      d="M6.33333 16.3333L10.2331 19.2582C10.6618 19.5797 11.2677 19.5061 11.607 19.0914L21.5 7"
+                      stroke="#4E7BEE"
+                      strokeWidth="3"
+                      strokeLinecap="round"
+                    />
+                  </svg>
+                </div>
+              )}
+            </button>
           ))}
           <p>{label}</p>
         </div>

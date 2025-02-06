@@ -7,6 +7,16 @@ interface DateList {
   isSelected: boolean;
 }
 
+export const dateOptions: Intl.DateTimeFormatOptions = {
+  day: "numeric",
+  month: "short",
+  year: "numeric",
+};
+
+export const dayOptions: Intl.DateTimeFormatOptions = {
+  weekday: "short",
+};
+
 export function ShowDates() {
   const router = useRouter();
   const pathname = usePathname();
@@ -30,16 +40,6 @@ export function ShowDates() {
       isSelected: newDate.valueOf().toString() === selectedDate,
     });
   }
-
-  const dateOptions: Intl.DateTimeFormatOptions = {
-    day: "numeric",
-    month: "short",
-    year: "numeric",
-  };
-
-  const dayOptions: Intl.DateTimeFormatOptions = {
-    weekday: "short",
-  };
   //   console.log(date, today);
 
   return (

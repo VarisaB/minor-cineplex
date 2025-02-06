@@ -2,6 +2,11 @@
 import { Showtime } from "@/models/showtime";
 import { useRouter } from "next/navigation";
 
+export const timeOptions: Intl.DateTimeFormatOptions = {
+  hour: "2-digit",
+  minute: "2-digit",
+};
+
 export default function Halls({ showtimes }: { showtimes: Showtime[] }) {
   // console.log("hall: ", showtimes);
   const router = useRouter();
@@ -13,10 +18,6 @@ export default function Halls({ showtimes }: { showtimes: Showtime[] }) {
     return acc;
   }, []);
 
-  const timeOptions: Intl.DateTimeFormatOptions = {
-    hour: "2-digit",
-    minute: "2-digit",
-  };
   const now = new Date();
   const timeStyle = (time: Date, index: number, allTime: Showtime[]) => {
     if (time < now) {

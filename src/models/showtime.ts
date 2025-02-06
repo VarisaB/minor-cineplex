@@ -1,4 +1,6 @@
 import mongoose from "mongoose";
+import cinemas, { Cinema } from "./cinema";
+import { Movie } from "./movie";
 
 export interface Seat {
   seatNumber: string;
@@ -6,11 +8,13 @@ export interface Seat {
 }
 
 export interface Showtime {
-  id?: string;
+  id: string;
   showtime: Date;
-  cinemaId: string;
+  cinemaId?: string;
+  cinema?: Cinema;
   hall: number;
-  movieId: number;
+  movieId?: number;
+  movie?: Movie;
   seats?: Seat[];
 }
 
@@ -29,7 +33,7 @@ const showtimeSchema = new mongoose.Schema({
   },
   cinema_id: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "Cinema",
+    ref: cinemas,
     required: true,
   },
   hall: {
