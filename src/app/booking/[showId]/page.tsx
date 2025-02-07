@@ -3,11 +3,29 @@ import BookingDetail from "@/components/BookingDetail";
 import BookingStep from "@/components/BookingStep";
 import SeatingPlan from "@/components/SeatingPlan";
 import { ShowDetail } from "@/components/ShowDetail";
-import { useState } from "react";
+import { Showtime } from "@/models/showtime";
+import { useState, useEffect } from "react";
+import { fetchShowDetails } from "@/lib/showtimes-api";
 
-export default function SelectingSeat() {
+export default function SelectingSeat({
+  params,
+}: {
+  params: { showId: string };
+}) {
   const [currentStep, setCurrentStep] = useState<number>(2);
   const [selectedSeat, setSelectedSeat] = useState<string[]>([]);
+  const [showDetails, setShowDatails] = useState<Showtime>();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const show = await fetchShowDetails({ showId: params.showId });
+      console.log(show);
+      if (show) {
+        setShowDatails(show);
+      }
+    };
+    fetchData();
+  }, []);
 
   return (
     <div className="mt-16">
@@ -19,11 +37,12 @@ export default function SelectingSeat() {
           <SeatingPlan
             selectedSeat={selectedSeat}
             setSelectedSeat={setSelectedSeat}
+            seats={showDetails?.seats || []}
           />
         )}
       </div>
       <div className="bg-[#070C1B]">
-        <ShowDetail />
+        <ShowDetail showDetails={showDetails} />
         {selectedSeat.length ? (
           <BookingDetail
             selectedSeat={selectedSeat}

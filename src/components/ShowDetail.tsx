@@ -1,28 +1,14 @@
 "use client";
 import Image from "next/image";
-import { useState, useEffect } from "react";
-import { useParams } from "next/navigation";
-import { fetchShowDetails } from "@/lib/showtimes-api";
 import { Showtime } from "@/models/showtime";
 import { dateOptions } from "./ShowDate";
 import { timeOptions } from "./Halls";
 
-export function ShowDetail() {
-  const params = useParams();
-  const showId = Array.isArray(params.showId)
-    ? params.showId[0]
-    : params.showId;
-
-  const [showDetails, setShowDatails] = useState<Showtime | null>();
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const show = await fetchShowDetails({ showId });
-      // console.log(show);
-      setShowDatails(show);
-    };
-    fetchData();
-  }, []);
+export function ShowDetail({
+  showDetails,
+}: {
+  showDetails: Showtime | undefined;
+}) {
   return (
     <div className="flex flex-row xl:flex-col gap-4 p-4">
       <Image

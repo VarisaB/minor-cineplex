@@ -3,8 +3,8 @@ import cinemas, { Cinema } from "./cinema";
 import { Movie } from "./movie";
 
 export interface Seat {
-  seatNumber: string;
-  status: string;
+  seatNo: string;
+  isBooked: boolean;
 }
 
 export interface Showtime {
@@ -15,11 +15,11 @@ export interface Showtime {
   hall: number;
   movieId?: number;
   movie?: Movie;
-  seats?: Seat[];
+  seats: Seat[];
 }
 
 const seatSchema = new mongoose.Schema({
-  seatNumber: { type: String, required: true },
+  seatNo: { type: String, required: true },
   isBooked: {
     type: Boolean,
     default: false,

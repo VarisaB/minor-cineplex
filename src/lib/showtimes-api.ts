@@ -43,10 +43,7 @@ export async function fetchShowtimes({
 export async function fetchShowDetails({ showId }: { showId: string }) {
   try {
     const res = await axios.get(
-      `${process.env.NEXT_PUBLIC_BASE_URL}/api/show-details`,
-      {
-        params: { showId },
-      }
+      `${process.env.NEXT_PUBLIC_BASE_URL}/api/showtimes/${showId}`
     );
 
     const data: Showtime | null = res.data
@@ -59,6 +56,7 @@ export async function fetchShowDetails({ showId }: { showId: string }) {
           },
           hall: res.data.hall,
           movie: { id: res.data.movie_id },
+          seats: res.data.seats,
         }
       : res.data;
 

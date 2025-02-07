@@ -1,14 +1,22 @@
+import { Seat } from "@/models/showtime";
 import Image from "next/image";
 import { Dispatch, SetStateAction, useEffect } from "react";
 
 type Props = {
   selectedSeat: string[];
   setSelectedSeat: Dispatch<SetStateAction<string[]>>;
+  seats: Seat[];
 };
 
-export default function SeatingPlan({ selectedSeat, setSelectedSeat }: Props) {
+export default function SeatingPlan({
+  selectedSeat,
+  setSelectedSeat,
+  seats,
+}: Props) {
+  console.log(seats);
+
   const rowLabel = ["A", "B", "C", "D", "E", "F"];
-  const seatNo = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+  const number = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
   const handleSelecting = (seat: string) => {
     console.log(seat);
@@ -27,40 +35,53 @@ export default function SeatingPlan({ selectedSeat, setSelectedSeat }: Props) {
       {rowLabel.map((label) => (
         <div key={label} className="flex flex-row justify-between items-center">
           <p>{label}</p>
-          {seatNo.map((seat) => (
-            <button
-              key={label + seat}
-              className="relative"
-              onClick={() => handleSelecting(label + seat)}
-            >
+          {number.map((num) =>
+            seats.find(
+              (seat) => seat.seatNo === label + num && seat.isBooked
+            ) ? (
               <Image
-                src="/booking/Seat-available.svg"
-                alt="available-seat-icon"
+                src="/booking/Seat-booked.svg"
+                alt="booked-seat-icon"
                 width={40}
                 height={40}
+                key={label + num}
                 className=""
               />
-              {selectedSeat.includes(label + seat) && (
-                <div className="absolute top-0 w-full h-full flex justify-center items-center">
-                  <svg
-                    width="29"
-                    height="28"
-                    viewBox="0 0 29 28"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="bg-white rounded-full"
-                  >
-                    <path
-                      d="M6.33333 16.3333L10.2331 19.2582C10.6618 19.5797 11.2677 19.5061 11.607 19.0914L21.5 7"
-                      stroke="#4E7BEE"
-                      strokeWidth="3"
-                      strokeLinecap="round"
-                    />
-                  </svg>
-                </div>
-              )}
-            </button>
-          ))}
+            ) : (
+              <button
+                key={label + num}
+                className="relative"
+                onClick={() => handleSelecting(label + num)}
+              >
+                <Image
+                  src="/booking/Seat-available.svg"
+                  alt="available-seat-icon"
+                  width={40}
+                  height={40}
+                  className=""
+                />
+                {selectedSeat.includes(label + num) && (
+                  <div className="absolute top-0 w-full h-full flex justify-center items-center">
+                    <svg
+                      width="29"
+                      height="28"
+                      viewBox="0 0 29 28"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="bg-white rounded-full"
+                    >
+                      <path
+                        d="M6.33333 16.3333L10.2331 19.2582C10.6618 19.5797 11.2677 19.5061 11.607 19.0914L21.5 7"
+                        stroke="#4E7BEE"
+                        strokeWidth="3"
+                        strokeLinecap="round"
+                      />
+                    </svg>
+                  </div>
+                )}
+              </button>
+            )
+          )}
           <p>{label}</p>
         </div>
       ))}

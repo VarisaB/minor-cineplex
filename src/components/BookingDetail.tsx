@@ -1,4 +1,6 @@
 "use client";
+import { reserveSeat } from "@/lib/booking-api";
+import { useParams } from "next/navigation";
 import { Dispatch, SetStateAction } from "react";
 
 type Props = {
@@ -8,10 +10,16 @@ type Props = {
 };
 
 export default function BookingDetail({ selectedSeat, step, setStep }: Props) {
+  const params = useParams();
+  const showId = Array.isArray(params.showId)
+    ? params.showId[0]
+    : params.showId;
+
   const price = 150;
 
-  const handleNext = () => {
+  const handleNext = async () => {
     if (step === 2) {
+      await reserveSeat({ seatNumber: selectedSeat, showId });
       setStep((prev) => prev + 1);
     }
   };
