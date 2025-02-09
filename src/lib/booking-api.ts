@@ -21,3 +21,25 @@ export async function reserveSeat({
     throw error;
   }
 }
+
+export async function cancelBooking({
+  showId,
+  seatNumber,
+}: {
+  showId: string;
+  seatNumber: string[];
+}) {
+  try {
+    const res = await axios.patch(
+      `${process.env.NEXT_PUBLIC_BASE_URL}/api/booking`,
+      { showId, seatNumber }
+    );
+
+    console.log(res.data);
+
+    return res.data;
+  } catch (error) {
+    console.error("Error in reserve seat", error);
+    throw error;
+  }
+}

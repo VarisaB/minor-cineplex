@@ -20,7 +20,7 @@ export default function HambugerMenu() {
 
           <hr className="border border-[#565F7E] w-full" />
 
-          <button onClick={() => signOut({ callbackUrl: "/" })} className="">
+          <button onClick={() => signOut()} className="">
             Log out
           </button>
         </div>

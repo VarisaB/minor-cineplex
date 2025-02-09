@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import showtimes, { Showtime } from "./showtime";
+import user from "./user";
 
 export interface Booking {
   id: string;
@@ -7,6 +8,7 @@ export interface Booking {
   seats: string[];
   price: number;
   payment?: string;
+  status?: string;
 }
 
 const bookingSchema = new mongoose.Schema({
@@ -18,6 +20,8 @@ const bookingSchema = new mongoose.Schema({
   seats: { type: [String] },
   price: { type: Number },
   payment: { type: String },
+  status: { type: String, default: "Pending" },
+  user: { type: mongoose.Schema.Types.ObjectId, ref: user, required: true },
 });
 
 export default mongoose.models.Booking ||

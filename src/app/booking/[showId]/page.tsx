@@ -6,6 +6,8 @@ import { ShowDetail } from "@/components/ShowDetail";
 import { Showtime } from "@/models/showtime";
 import { useState, useEffect } from "react";
 import { fetchShowDetails } from "@/lib/showtimes-api";
+import Timer from "@/components/Timer";
+import Payment from "@/components/Payment";
 
 export default function SelectingSeat({
   params,
@@ -40,17 +42,17 @@ export default function SelectingSeat({
             seats={showDetails?.seats || []}
           />
         )}
+        {currentStep === 3 && <Payment />}
       </div>
       <div className="bg-[#070C1B]">
+        {currentStep === 3 && <Timer selectedSeat={selectedSeat} />}
         <ShowDetail showDetails={showDetails} />
-        {selectedSeat.length ? (
+        {selectedSeat.length > 0 && (
           <BookingDetail
             selectedSeat={selectedSeat}
             step={currentStep}
             setStep={setCurrentStep}
           />
-        ) : (
-          <></>
         )}
       </div>
     </div>

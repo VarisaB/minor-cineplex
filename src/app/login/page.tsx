@@ -23,12 +23,12 @@ export default function Login() {
       });
       console.log(res);
       if (res?.ok) {
-        //   router.replace("/login");
         setIsOpen(false);
+        router.back();
       } else {
         setIsOpen(true);
       }
-    } catch (err: any) {
+    } catch (err) {
       console.error("login: ", err);
     }
   };

@@ -1,6 +1,7 @@
 "use client";
 import { reserveSeat } from "@/lib/booking-api";
-import { useParams } from "next/navigation";
+import { useSession } from "next-auth/react";
+import { useParams, useRouter } from "next/navigation";
 import { Dispatch, SetStateAction } from "react";
 
 type Props = {
@@ -14,11 +15,15 @@ export default function BookingDetail({ selectedSeat, step, setStep }: Props) {
   const showId = Array.isArray(params.showId)
     ? params.showId[0]
     : params.showId;
-
   const price = 150;
+  const router = useRouter();
+  const { data: session, status } = useSession();
+  // console.log("from NextAuth", session, status);
 
   const handleNext = async () => {
-    if (step === 2) {
+    if (status === "unauthenticated") {
+      router.push("/login");
+    } else if (step === 2) {
       await reserveSeat({ seatNumber: selectedSeat, showId });
       setStep((prev) => prev + 1);
     }
