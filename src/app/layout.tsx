@@ -3,7 +3,7 @@ import { Roboto_Condensed } from "next/font/google"; // Importing Roboto Condens
 import localFont from "next/font/local"; // Importing local fonts for GeistSans and GeistMono
 import "./globals.css";
 import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
+import { CustomProviders } from "./provider";
 
 // Load the Roboto Condensed font from Google
 const robotoCondensed = Roboto_Condensed({
@@ -24,10 +24,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={robotoCondensed.className}>
-        <Navbar />
-        <main className="bg-[#101525]">{children}</main>
-        <Footer />
+      <body className={`${robotoCondensed.className} bg-[#101525]`}>
+        <CustomProviders>
+          <Navbar />
+          <main className="bg-[#101525]">{children}</main>
+        </CustomProviders>
       </body>
     </html>
   );
