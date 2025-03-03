@@ -8,9 +8,15 @@ type Props = {
   selectedSeat: string[];
   step: number;
   setStep: Dispatch<SetStateAction<number>>;
+  setBookingId: Dispatch<SetStateAction<string | undefined>>;
 };
 
-export default function BookingDetail({ selectedSeat, step, setStep }: Props) {
+export default function BookingDetail({
+  selectedSeat,
+  step,
+  setStep,
+  setBookingId,
+}: Props) {
   const params = useParams();
   const showId = Array.isArray(params.showId)
     ? params.showId[0]
@@ -24,7 +30,8 @@ export default function BookingDetail({ selectedSeat, step, setStep }: Props) {
     if (status === "unauthenticated") {
       router.push("/login");
     } else if (step === 2) {
-      await reserveSeat({ seatNumber: selectedSeat, showId });
+      const result = await reserveSeat({ seatNumber: selectedSeat, showId });
+      setBookingId(result.bookingId);
       setStep((prev) => prev + 1);
     }
   };

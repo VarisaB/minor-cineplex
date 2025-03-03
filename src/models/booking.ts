@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 import showtimes, { Showtime } from "./showtime";
-import user from "./user";
+import user, { UserProfile } from "./user";
 
 export interface Booking {
   id: string;
@@ -9,6 +9,7 @@ export interface Booking {
   price: number;
   payment?: string;
   status?: string;
+  user: UserProfile | string;
 }
 
 const bookingSchema = new mongoose.Schema({

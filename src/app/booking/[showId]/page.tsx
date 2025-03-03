@@ -17,6 +17,7 @@ export default function SelectingSeat({
   const [currentStep, setCurrentStep] = useState<number>(2);
   const [selectedSeat, setSelectedSeat] = useState<string[]>([]);
   const [showDetails, setShowDatails] = useState<Showtime>();
+  const [bookingId, setBookingId] = useState<string>();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -45,13 +46,16 @@ export default function SelectingSeat({
         {currentStep === 3 && <Payment />}
       </div>
       <div className="bg-[#070C1B]">
-        {currentStep === 3 && <Timer selectedSeat={selectedSeat} />}
+        {currentStep === 3 && bookingId !== undefined && (
+          <Timer selectedSeat={selectedSeat} bookingId={bookingId} />
+        )}
         <ShowDetail showDetails={showDetails} />
         {selectedSeat.length > 0 && (
           <BookingDetail
             selectedSeat={selectedSeat}
             step={currentStep}
             setStep={setCurrentStep}
+            setBookingId={setBookingId}
           />
         )}
       </div>

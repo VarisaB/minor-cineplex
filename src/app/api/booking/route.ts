@@ -2,11 +2,18 @@ import { NextRequest, NextResponse } from "next/server";
 import showtimes, { Seat } from "@/models/showtime";
 import mongoose from "mongoose";
 import booking from "@/models/booking";
-import { getSession } from "next-auth/react";
+import { getServerSession } from "next-auth";
+import { authOptions } from "../auth/[...nextauth]/route";
 
 export async function POST(req: NextRequest) {
-  // TODO: get user session and add in new booking
-  // const user = await getSession({ req });
+  //TODO: move check authen to middleware
+  /** check authentication */
+  const authSession = await getServerSession(authOptions);
+  console.log(authSession);
+  if (!authSession) {
+    return NextResponse.json({ status: 401 });
+  }
+
   const { showId, seatNumber } = await req.json();
   const session = await mongoose.startSession();
   try {
@@ -60,16 +67,17 @@ export async function POST(req: NextRequest) {
 
       /** create new booking history */
       const newBooking = new booking({
+        user: authSession?.user?.id,
         showtime: showId,
         seats: seatNumber,
       });
       await newBooking.save({ session });
-      return true;
+      return newBooking;
     });
     session.endSession();
-    console.log(transaction);
+    // console.log(transaction);
     return NextResponse.json(
-      { message: "Reserve Seat Successful" },
+      { message: "Reserve Seat Successful", bookingId: transaction._id },
       { status: 200 }
     );
   } catch (error: any) {
@@ -83,7 +91,15 @@ export async function POST(req: NextRequest) {
 }
 
 export async function PATCH(req: NextRequest) {
-  const { showId, seatNumber } = await req.json();
+  //TODO: move check authen to middleware
+  /** check authentication */
+  const authSession = await getServerSession(authOptions);
+  console.log(authSession);
+  if (!authSession) {
+    return NextResponse.json({ status: 401 });
+  }
+
+  const { showId, seatNumber, bookingId } = await req.json();
   const session = await mongoose.startSession();
   try {
     const transaction = await session.withTransaction(async () => {
@@ -107,20 +123,20 @@ export async function PATCH(req: NextRequest) {
       );
 
       /** update booking history */
-      const history = await booking.findOneAndUpdate(
-        { showtime: showId },
-        { $set: { status: "TimeOut" } },
+      const history = await booking.findByIdAndUpdate(
+        bookingId,
+        { $set: { status: "Cancel" } },
         { new: true, session }
       );
 
       console.log("Booking history: ", history, "Showtime: ", showDetail);
 
-      return true;
+      return history;
     });
     session.endSession();
     console.log(transaction);
     return NextResponse.json(
-      { message: "Cancel Booking Successful" },
+      { message: "Cancel Booking Successful", bookingId: transaction._id },
       { status: 200 }
     );
   } catch (error: any) {

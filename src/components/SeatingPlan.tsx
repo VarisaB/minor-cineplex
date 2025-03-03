@@ -13,8 +13,6 @@ export default function SeatingPlan({
   setSelectedSeat,
   seats,
 }: Props) {
-  console.log(seats);
-
   const rowLabel = ["A", "B", "C", "D", "E", "F"];
   const number = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 

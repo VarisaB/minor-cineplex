@@ -13,7 +13,7 @@ export async function reserveSeat({
       { showId, seatNumber }
     );
 
-    console.log(res.data);
+    // console.log("booking-api", res.data);
 
     return res.data;
   } catch (error) {
@@ -25,17 +25,19 @@ export async function reserveSeat({
 export async function cancelBooking({
   showId,
   seatNumber,
+  bookingId,
 }: {
   showId: string;
   seatNumber: string[];
+  bookingId: string;
 }) {
   try {
     const res = await axios.patch(
       `${process.env.NEXT_PUBLIC_BASE_URL}/api/booking`,
-      { showId, seatNumber }
+      { showId, seatNumber, bookingId }
     );
 
-    console.log(res.data);
+    // console.log("booking-api", res.data);
 
     return res.data;
   } catch (error) {

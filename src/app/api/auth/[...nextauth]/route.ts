@@ -1,7 +1,8 @@
+import { NextAuthOptions } from "next-auth";
 import NextAuth from "next-auth/next";
 import CredentialsProvider from "next-auth/providers/credentials";
 
-const handler = NextAuth({
+export const authOptions: NextAuthOptions = {
   providers: [
     CredentialsProvider({
       name: "Credentials",
@@ -22,11 +23,11 @@ const handler = NextAuth({
             }
           );
 
-          console.log("nextAuth", res);
+          // console.log("nextAuth", res);
           if (res.ok) {
-            const result = await res.json();
+            const { data } = await res.json();
 
-            return result.data;
+            return { id: data._id, name: data.name, email: data.email };
           }
           return null;
         } catch (error) {
@@ -38,6 +39,22 @@ const handler = NextAuth({
   pages: {
     signIn: "/login",
   },
-});
+  callbacks: {
+    async jwt({ token, user }) {
+      if (user) {
+        token.id = user.id;
+      }
+      return token;
+    },
+    async session({ session, token }) {
+      if (token) {
+        session.user.id = token.id;
+      }
+      return session;
+    },
+  },
+};
+
+const handler = NextAuth(authOptions);
 
 export { handler as GET, handler as POST };

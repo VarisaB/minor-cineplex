@@ -3,7 +3,13 @@ import { cancelBooking } from "@/lib/booking-api";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
-export default function Timer({ selectedSeat }: { selectedSeat: string[] }) {
+export default function Timer({
+  selectedSeat,
+  bookingId,
+}: {
+  selectedSeat: string[];
+  bookingId: string;
+}) {
   const params = useParams();
   const showId = Array.isArray(params.showId)
     ? params.showId[0]
@@ -18,7 +24,7 @@ export default function Timer({ selectedSeat }: { selectedSeat: string[] }) {
       return () => clearInterval(timeoutId);
     } else {
       const cancel = async () => {
-        await cancelBooking({ seatNumber: selectedSeat, showId });
+        await cancelBooking({ seatNumber: selectedSeat, showId, bookingId });
       };
       cancel();
       //TODO 1: when time out should pop up the message before reload
